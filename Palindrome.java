@@ -21,8 +21,8 @@ public class Palindrome {
         for(int i=stringArray.length;i>0;i--){
             reverseStringArray[stringArray.length-i]=stringArray[i-1];
         }
+        //Compare the original and revered string, store the result and output feedback
         int isPalindrome = stringToTest.compareTo(String.valueOf(reverseStringArray));
-
         System.out.println("\"" + String.valueOf(reverseStringArray) + "\" is \"" + stringToTest + "\" reversed.");
         if(isPalindrome ==0){
             System.out.println("The input is a Palindrome");
