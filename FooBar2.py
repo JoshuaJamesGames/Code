@@ -33,3 +33,4 @@ for i in range(num_pegs-1):
     if peg_gaps[i] < 2:
         print('[-1,-1]')
 print(peg_gaps)
+
