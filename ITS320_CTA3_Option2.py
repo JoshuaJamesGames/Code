@@ -8,3 +8,14 @@
 #Write a statement that prompts the user for an income, looks up the tax rate
 #then prints up the income, tax rate, and tax
 
+#Set up the income brackets and rates
+#Using integer keys and values so I can parse them later
+tax_brackets = {
+    500:10,
+    1500:20,
+    2500:30
+}
+
+#Get input from the user with a prompt
+print('This program will tell you what your tax rate and taxes are based on your input.')
+user_income = input('What is your weekly income?: ')
