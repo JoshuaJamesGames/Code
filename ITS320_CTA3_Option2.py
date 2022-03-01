@@ -33,7 +33,7 @@ user_income = int(input('What is your weekly income?: '))
 #The classic if, elif..., else sequence
 if user_income < 500:
     tax_rate = tax_brackets['Less than 500']
-    tax_range = 'Less than $500'
+    tax_range = 'less than $500'
 elif (user_income >= 500) and (user_income <= 1499):
     tax_rate = tax_brackets['500 to 1499']
     tax_range = 'between $500 and $1499'
@@ -50,6 +50,6 @@ tax = int((user_income/100)*tax_rate)
 #Output useful information!
 print(f'\nYou make ${user_income} per week.')
 print(f'That is ${user_income * 52} a year, before taxes.')
-print(f'Your taxe rate is {tax_rate}%.')
+print(f'Your income is {tax_range}, so your tax rate is {tax_rate}%.')
 print(f'That means you will pay ${tax} per week or ${tax*52} in taxes a year.')
 print(f'After taxes, you will make ${(user_income - tax)} per week or ${(user_income - tax)*52} per year.')
