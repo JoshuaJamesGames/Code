@@ -28,7 +28,7 @@ def solution(h, q):
             print(node)
             accumulator =0
             parent = root
-            for level_from_top in range(1,height):
+            for level_from_top in range(1,height+1):
                 if node == child: #Found it and break inner loop
                     parent_nodes.append(parent)
                     print(parent, 'appended')
@@ -45,7 +45,7 @@ def solution(h, q):
                     print('right',parent,child,node)
                 
     return parent_nodes
-#print(solution(5,[19, 14, 28]))
+print(solution(5,[19, 14, 28]))
 #21,15,29
 print(solution(3, [7, 3, 5, 1]))
 #-1,7,6,3
