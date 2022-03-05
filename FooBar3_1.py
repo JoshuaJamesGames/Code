@@ -20,6 +20,20 @@
 
 
 
+#Going to need a list of the Non-Absorbent or the opposite
+def getAbsorbents(matrix)
+    absorbents = []
+    for row in matrix:
+        if sum(row)==0: #If all 0's
+            absorbents.append(True)
+        else:
+            absorbents.append(False) #Might come back and insert the sum for fractions
+    return absorbents
+    
+#Let's get Q first
+def getQ(matrix)
+
+
 def solution(m)
 
 
