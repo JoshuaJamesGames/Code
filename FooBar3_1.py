@@ -17,6 +17,7 @@
 
 #No Matrix operations in Python 2.7 so...
 #Going to need a Least Common Denominator for fractions
+from fractions import Fraction
 
 #I want to see progress as I proceed
 def printMatrix(matrix):
@@ -42,9 +43,13 @@ def getQ(matrix):
             matrixQ.append([])
             for column in range(len(matrix[row])):
                 if absorbents[column] != True:
-                    matrixQ[row].append(matrix[row][column])
+                    if matrix[row][column]==0:
+                        matrixQ[row].append(0)
+                    else:
+                        matrixQ[row].append(Fraction(matrix[row][column],sum(matrix[row]))) #Yay! Fraction again
     return matrixQ
 
+#Now we can get R
 def getR(matrix):
     absorbents = getAbsorbents(matrix)    
     matrixR =[]
@@ -53,7 +58,10 @@ def getR(matrix):
             matrixR.append([])
             for column in range(len(matrix[row])):
                 if absorbents[column] == True:
-                    matrixR[row].append(matrix[row][column])
+                    if matrix[row][column]==0:
+                        matrixR[row].append(0)
+                    else:
+                        matrixR[row].append(Fraction(matrix[row][column],sum(matrix[row])))                   
     return matrixR
 
 def solution(m):
@@ -61,6 +69,7 @@ def solution(m):
     printMatrix(getQ(m))
     print('R is:')
     printMatrix(getR(m))
+    
 
 #Example 1
 print(solution([[0, 2, 1, 0, 0], [0, 0, 0, 3, 4], [0, 0, 0, 0, 0], [0, 0, 0, 0,0], [0, 0, 0, 0, 0]]))
