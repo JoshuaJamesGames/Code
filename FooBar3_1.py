@@ -219,7 +219,11 @@ def solution(m):
 
     print('The inverse of (I-Q) *R is:')
     '''
-    #From the Wiki
+    #Maybe it is already fuel
+    already_fuel = m[0][0]
+    if sum(m[0])==already_fuel:
+        return[1,1]
+    #From the Wiki    
     B = mult_matrix(invert_matrix(sub_matrix(getI(m),getQ(m))),getR(m))
     denominator_list = []
     numerator_list = []
@@ -234,8 +238,8 @@ def solution(m):
     for index in range(len(denominator_list)):
         numerator_list[index] *= common_multiple/denominator_list[index]
     print(numerator_list)
-    answer = numerator_list.append(common_multiple)
-    return answer
+    numerator_list.append(common_multiple)
+    return numerator_list
     
 
     
