@@ -18,6 +18,7 @@
 #No Matrix operations in Python 2.7 so...
 #Going to need a Least Common Denominator for fractions
 from fractions import Fraction
+from re import sub
 
 #I want to see progress as I proceed
 def printMatrix(matrix):
@@ -34,41 +35,77 @@ def getAbsorbents(matrix):
             absorbents.append(False) #Might come back and insert the sum for fractions
     return absorbents
 
-#Let's get Q first
+#Let's get Q first : The Transition x Transition Matrix
 def getQ(matrix):
     absorbents = getAbsorbents(matrix)    
     matrixQ =[]
+    num_rows = 0
     for row in range(len(matrix)):
         if absorbents[row] != True:
             matrixQ.append([])
+            num_rows += 1
             for column in range(len(matrix[row])):
                 if absorbents[column] != True:
                     if matrix[row][column]==0:
-                        matrixQ[row].append(0)
+                        matrixQ[num_rows-1].append(0)
                     else:
-                        matrixQ[row].append(Fraction(matrix[row][column],sum(matrix[row]))) #Yay! Fraction again
+                        matrixQ[num_rows-1].append(Fraction(matrix[row][column],sum(matrix[row]))) #Yay! Fraction again
     return matrixQ
 
-#Now we can get R
+#Now we can get R : The Transition X Absorbing Matrix
 def getR(matrix):
     absorbents = getAbsorbents(matrix)    
     matrixR =[]
+    num_rows = 0
     for row in range(len(matrix)):
         if absorbents[row] != True:
             matrixR.append([])
+            num_rows += 1
             for column in range(len(matrix[row])):
                 if absorbents[column] == True:
                     if matrix[row][column]==0:
-                        matrixR[row].append(0)
+                        matrixR[num_rows-1].append(0)
                     else:
-                        matrixR[row].append(Fraction(matrix[row][column],sum(matrix[row])))                   
+                        matrixR[num_rows-1].append(Fraction(matrix[row][column],sum(matrix[row])))                   
     return matrixR
+
+#And now I : The identity matrix of non-absorbents
+def getI(matrix):
+    absorbents = getAbsorbents(matrix)
+    matrixI = []
+    num_rows = 0    
+    for row in range(len(matrix)):
+        if absorbents[row] != True:
+            matrixI.append([])
+            num_rows += 1
+            for column in range(len(matrix[row])):
+                if absorbents[column] != True:
+                    if row==column:
+                        matrixI[num_rows-1].append(1)
+                    else:
+                        matrixI[num_rows-1].append(0)
+
+    return matrixI
+
+#Going to need some matrix operations
+#We'll go Subtraction first
+def sub_matrix(matrix1,matrix2):
+    answer = []
+    for row in range(len(matrix1)):
+        answer.append([])
+        for column in range(len(matrix1[row])):
+            answer[row].append(matrix1[row][column]-matrix2[row][column])
+    return answer
 
 def solution(m):
     print('Q is:')
     printMatrix(getQ(m))
     print('R is:')
     printMatrix(getR(m))
+    print('I is:')
+    printMatrix(getI(m))
+    print('I-Q is:')    
+    print(sub_matrix(getI(m),getQ(m)))
     
 
 #Example 1
@@ -76,3 +113,6 @@ print(solution([[0, 2, 1, 0, 0], [0, 0, 0, 3, 4], [0, 0, 0, 0, 0], [0, 0, 0, 0,0
 
 #Example 2
 print(solution([[0, 1, 0, 0, 0, 1], [4, 0, 0, 3, 2, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]]))
+
+#Example 3
+#print(solution([[1,0,1],[0,0,0],[1,1,0]]))
