@@ -18,10 +18,13 @@
 #No Matrix operations in Python 2.7 so...
 #Going to need a Least Common Denominator for fractions
 
-
+#I want to see progress as I proceed
+def printMatrix(matrix):
+    for row in matrix:
+        print(row)
 
 #Going to need a list of the Non-Absorbent or the opposite
-def getAbsorbents(matrix)
+def getAbsorbents(matrix):
     absorbents = []
     for row in matrix:
         if sum(row)==0: #If all 0's
@@ -29,12 +32,25 @@ def getAbsorbents(matrix)
         else:
             absorbents.append(False) #Might come back and insert the sum for fractions
     return absorbents
-    
+
 #Let's get Q first
-def getQ(matrix)
+def getQ(matrix):
+    absorbents = getAbsorbents(matrix)    
+    matrixQ =[]
+    for row in range(len(matrix)):
+        if absorbents[row] != True:
+            matrixQ.append([])
+            for column in range(len(matrix[row])):
+                if absorbents[column] != True:
+                    matrixQ[row].append(matrix[row][column])
+    return matrixQ
 
+def solution(m):
+    print('Q is:')
+    printMatrix(getQ(m))
 
-def solution(m)
+#Example 1
+print(solution([[0, 2, 1, 0, 0], [0, 0, 0, 3, 4], [0, 0, 0, 0, 0], [0, 0, 0, 0,0], [0, 0, 0, 0, 0]]))
 
-
+#Example 2
 print(solution([[0, 1, 0, 0, 0, 1], [4, 0, 0, 3, 2, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]]))
