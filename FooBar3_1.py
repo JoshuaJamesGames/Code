@@ -45,9 +45,22 @@ def getQ(matrix):
                     matrixQ[row].append(matrix[row][column])
     return matrixQ
 
+def getR(matrix):
+    absorbents = getAbsorbents(matrix)    
+    matrixR =[]
+    for row in range(len(matrix)):
+        if absorbents[row] != True:
+            matrixR.append([])
+            for column in range(len(matrix[row])):
+                if absorbents[column] == True:
+                    matrixR[row].append(matrix[row][column])
+    return matrixR
+
 def solution(m):
     print('Q is:')
     printMatrix(getQ(m))
+    print('R is:')
+    printMatrix(getR(m))
 
 #Example 1
 print(solution([[0, 2, 1, 0, 0], [0, 0, 0, 3, 4], [0, 0, 0, 0, 0], [0, 0, 0, 0,0], [0, 0, 0, 0, 0]]))
