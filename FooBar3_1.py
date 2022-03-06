@@ -97,7 +97,8 @@ def sub_matrix(matrix1,matrix2):
             answer[row].append(matrix1[row][column]-matrix2[row][column])
     return answer
 
-#Multiplication
+#Multiplication : Input matrices need to match : matrix1 columns == matrix2 rows
+#Not going to do error checking as my input should be valid
 def mult_matrix(matrix1,matrix2):
     answer = []
     for column in range(len(matrix2[0])):
@@ -105,25 +106,111 @@ def mult_matrix(matrix1,matrix2):
         for row in range(len(matrix1)):
             sum=0
             for subrow in range(len(matrix1[0])):                
-                sum += matrix1[row][subrow] * matrix2[subrow][column]
-                print(matrix1[row][subrow], matrix2[subrow][column])
-            print('appended')
+                sum += matrix1[row][subrow] * matrix2[subrow][column]          
             answer[column].append(sum)
     return answer
+
+#Holy crap inverting a matrix!  Credit to https://github.com/ThomIves/MatrixInverse/blob/master/MatrixInversion.py
+#I originally found it at https://integratedmlai.com/matrixinverse/
+#Thank goodness we have written programs to do this
+def zeros_matrix(rows, cols):
+    """
+    Creates a matrix filled with zeros.
+        :param rows: the number of rows the matrix should have
+        :param cols: the number of columns the matrix should have
+        :returns: list of lists that form the matrix.
+    """
+    M = []
+    while len(M) < rows:
+        M.append([])
+        while len(M[-1]) < cols:
+            M[-1].append(0.0)
+
+    return M
+def identity_matrix(n):
+    """
+    Creates and returns an identity matrix.
+        :param n: the square size of the matrix
+        :returns: a square identity matrix
+    """
+    I = zeros_matrix(n, n)
+    for i in range(n):
+        I[i][i] = 1.0
+
+    return I
+def copy_matrix(M):
+    """
+    Creates and returns a copy of a matrix.
+        :param M: The matrix to be copied
+        :return: The copy of the given matrix
+    """
+    rows = len(M)
+    cols = len(M[0])
+
+    MC = zeros_matrix(rows, cols)
+
+    for i in range(rows):
+        for j in range(rows):
+            MC[i][j] = M[i][j]
+
+    return MC
+def invert_matrix(A, tol=None):
+    """
+    Returns the inverse of the passed in matrix.
+        :param A: The matrix to be inversed
+        :return: The inverse of the matrix A
+    """
+   
+    #Make copies of A & I, AM & IM, to use for row operations
+    n = len(A)
+    AM = copy_matrix(A)
+    I = identity_matrix(n)
+    IM = copy_matrix(I)
+
+    #Perform row operations
+    indices = list(range(n)) # to allow flexible row referencing ***
+    for fd in range(n): # fd stands for focus diagonal
+        fdScaler = 1.0 / AM[fd][fd]
+        # FIRST: scale fd row with fd inverse. 
+        for j in range(n): # Use j to indicate column looping.
+            AM[fd][j] *= fdScaler
+            IM[fd][j] *= fdScaler
+        # SECOND: operate on all rows except fd row as follows:
+        for i in indices[0:fd] + indices[fd+1:]: # *** skip row with fd in it.
+            crScaler = AM[i][fd] # cr stands for "current row".
+            for j in range(n): # cr - crScaler * fdRow, but one element at a time.
+                AM[i][j] = AM[i][j] - crScaler * AM[fd][j]
+                IM[i][j] = IM[i][j] - crScaler * IM[fd][j]
+    #Converting to Fractions : This is not in the original
+    for row in range(n):
+        for column in range(n):
+            IM[row][column] = Fraction(IM[row][column]).limit_denominator()
+    return IM
 
 def solution(m):
     print('Q is:')
     printMatrix(getQ(m))
+    print()
+
     print('R is:')
     printMatrix(getR(m))
+    print()
+
     print('I is:')
     printMatrix(getI(m))
+    print()
+
     print('I-Q is:')    
     printMatrix(sub_matrix(getI(m),getQ(m)))
-    printMatrix(mult_matrix([[1,7],[2,4]],[[3,3],[5,2]]))
-    test1= [[2,4],[-1,-2],[7,-12]]
-    test2= [[5],[-3]]
-    printMatrix(mult_matrix(test1,test2))
+    print()
+
+    print('Inverse of (I-Q) is:')
+    printMatrix(invert_matrix(sub_matrix(getI(m),getQ(m))))
+    print()
+
+    print('The inverse of (I-Q) *R is:')
+    
+    
     
 
 #Example 1
