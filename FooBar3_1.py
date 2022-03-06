@@ -97,6 +97,20 @@ def sub_matrix(matrix1,matrix2):
             answer[row].append(matrix1[row][column]-matrix2[row][column])
     return answer
 
+#Multiplication
+def mult_matrix(matrix1,matrix2):
+    answer = []
+    for column in range(len(matrix2[0])):
+        answer.append([])        
+        for row in range(len(matrix1)):
+            sum=0
+            for subrow in range(len(matrix1[0])):                
+                sum += matrix1[row][subrow] * matrix2[subrow][column]
+                print(matrix1[row][subrow], matrix2[subrow][column])
+            print('appended')
+            answer[column].append(sum)
+    return answer
+
 def solution(m):
     print('Q is:')
     printMatrix(getQ(m))
@@ -105,14 +119,18 @@ def solution(m):
     print('I is:')
     printMatrix(getI(m))
     print('I-Q is:')    
-    print(sub_matrix(getI(m),getQ(m)))
+    printMatrix(sub_matrix(getI(m),getQ(m)))
+    printMatrix(mult_matrix([[1,7],[2,4]],[[3,3],[5,2]]))
+    test1= [[2,4],[-1,-2],[7,-12]]
+    test2= [[5],[-3]]
+    printMatrix(mult_matrix(test1,test2))
     
 
 #Example 1
-print(solution([[0, 2, 1, 0, 0], [0, 0, 0, 3, 4], [0, 0, 0, 0, 0], [0, 0, 0, 0,0], [0, 0, 0, 0, 0]]))
+#print(solution([[0, 2, 1, 0, 0], [0, 0, 0, 3, 4], [0, 0, 0, 0, 0], [0, 0, 0, 0,0], [0, 0, 0, 0, 0]]))
 
 #Example 2
-print(solution([[0, 1, 0, 0, 0, 1], [4, 0, 0, 3, 2, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]]))
+#print(solution([[0, 1, 0, 0, 0, 1], [4, 0, 0, 3, 2, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]]))
 
-#Example 3
-#print(solution([[1,0,1],[0,0,0],[1,1,0]]))
+#Example 3 from Brilliant.org
+print(solution([[0,1,0,1,0],[1,0,1,0,0],[0,1,0,0,1],[0,0,0,0,0],[0,0,0,0,0]]))
