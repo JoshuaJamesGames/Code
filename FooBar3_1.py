@@ -18,7 +18,8 @@
 #No Matrix operations in Python 2.7 so...
 #Going to need a Least Common Denominator for fractions
 from fractions import Fraction
-from re import sub
+from fractions import gcd
+
 
 #I want to see progress as I proceed
 def printMatrix(matrix):
@@ -110,6 +111,12 @@ def mult_matrix(matrix1,matrix2):
             answer[column].append(sum)
     return answer
 
+def get_lcm(list):
+    lcm = 1 #Duh
+    for number in list:
+        lcm = lcm*number // gcd(lcm, number)
+    return lcm
+
 #Holy crap inverting a matrix!  Credit to https://github.com/ThomIves/MatrixInverse/blob/master/MatrixInversion.py
 #I originally found it at https://integratedmlai.com/matrixinverse/
 #Thank goodness we have written programs to do this
@@ -186,8 +193,10 @@ def invert_matrix(A, tol=None):
         for column in range(n):
             IM[row][column] = Fraction(IM[row][column]).limit_denominator()
     return IM
+#Thanks a bunch for Thomas' efforts...from the shoulders of giants.
 
 def solution(m):
+    '''
     print('Q is:')
     printMatrix(getQ(m))
     print()
@@ -209,15 +218,34 @@ def solution(m):
     print()
 
     print('The inverse of (I-Q) *R is:')
+    '''
+    #From the Wiki
+    B = mult_matrix(invert_matrix(sub_matrix(getI(m),getQ(m))),getR(m))
+    denominator_list = []
+    numerator_list = []
+    for chance in range(len(B)):
+        numerator_list.append(B[chance][0].numerator)
+        denominator_list.append(B[chance][0].denominator)
+    printMatrix(B)
+    print(numerator_list)
+    print(denominator_list)
+    print(get_lcm(denominator_list))
+    common_multiple = get_lcm(denominator_list)
+    for index in range(len(denominator_list)):
+        numerator_list[index] *= common_multiple/denominator_list[index]
+    print(numerator_list)
+    answer = numerator_list.append(common_multiple)
+    return answer
     
+
     
     
 
 #Example 1
-#print(solution([[0, 2, 1, 0, 0], [0, 0, 0, 3, 4], [0, 0, 0, 0, 0], [0, 0, 0, 0,0], [0, 0, 0, 0, 0]]))
+print(solution([[0, 2, 1, 0, 0], [0, 0, 0, 3, 4], [0, 0, 0, 0, 0], [0, 0, 0, 0,0], [0, 0, 0, 0, 0]]))
 
 #Example 2
-#print(solution([[0, 1, 0, 0, 0, 1], [4, 0, 0, 3, 2, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]]))
+print(solution([[0, 1, 0, 0, 0, 1], [4, 0, 0, 3, 2, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]]))
 
 #Example 3 from Brilliant.org
-print(solution([[0,1,0,1,0],[1,0,1,0,0],[0,1,0,0,1],[0,0,0,0,0],[0,0,0,0,0]]))
+#print(solution([[0,1,0,1,0],[1,0,1,0,0],[0,1,0,0,1],[0,0,0,0,0],[0,0,0,0,0]]))
