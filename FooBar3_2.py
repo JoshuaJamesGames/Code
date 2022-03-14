@@ -17,7 +17,7 @@
 
 #Stay within bounds while navigating
 def within_bounds(node, map):
-    row,column = node
+    (row,column) = node
     if row < 0 or column < 0 or row > len(map)-1 or column > len(map[0])-1:
         return False
     else:
@@ -25,6 +25,18 @@ def within_bounds(node, map):
 
 #Check to see if the nodes are within one (1) distance of each other
 def within_one(origin_node, destination_node):
+    (origin_row, origin_column) = origin_node
+    (destination_row, destination_column) = destination_node
+    if origin_row+1 == destination_row-1 and origin_column == destination_column:
+        return True
+    elif origin_row-1 == destination_row+1 and origin_column == destination_column:
+        return True
+    elif origin_row == destination_row and origin_column+1 == destination_column-1:
+        return True
+    elif origin_row == destination_row and origin_column-1 == destination_column+1:
+        return True
+    else:
+        return False
 
 
 def navigate(origin_path, destination_path):
