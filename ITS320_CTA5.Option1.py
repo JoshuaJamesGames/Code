@@ -27,8 +27,8 @@ print()
 #The double_reverse function
 def double_reverse(string_list):
     double_reversed_string = '' #Store our result here
-    for string in reversed(string_list): #Going in reverse
-        double_reversed_string +=string[::-1] #Using slice notation
+    for string in reversed(string_list): #Going in reverse through string_list
+        double_reversed_string +=string[::-1] #Reverse copy using slice notation
     return double_reversed_string
 
 #Output the results using double_reverse()
