@@ -15,5 +15,31 @@
 #If paths come within one (1) distance of each other - found the path
 #Check nearness first - might be a small matrix (2x2)
 
+#Stay within bounds while navigating
+def within_bounds(node, map):
+    row,column = node
+    if row < 0 or column < 0 or row > len(map)-1 or column > len(map[0])-1:
+        return False
+    else:
+        return True
+
+#Check to see if the nodes are within one (1) distance of each other
+def within_one(origin_node, destination_node):
+
+
+def navigate(origin_path, destination_path):
+
+
+
 def solution(map):
-    # Your code here
+    origin_path = [(0,0)]
+    destination_path = [(len(map)-1,len(map[0])-1)]
+    print(origin_path,destination_path)
+
+    return #Distance
+
+example1 = [[0,1,1,0],[0,0,0,1],[1,1,0,0],[1,1,1,0]]
+solution(example1)
+
+example2 = [[0,0,0,0,0,0],[1,1,1,1,1,0],[0,0,0,0,0,0],[0,1,1,1,1,1],[0,1,1,1,1,1],[0,0,0,0,0,0]]
+solution(example2)
