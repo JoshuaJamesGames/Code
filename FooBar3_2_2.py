@@ -39,27 +39,8 @@ def is_visited(row, column, path):
         
     return visited
 
-#Check to see if the nodes are within one (1) distance of each other
-def within_one(origin_path, destination_path):
-    #reference the last node on origin list vs the destination path 
-    origin_node = origin_path[-1]
-    (origin_row, origin_column) = origin_node[0:2]
-    for destination_node in destination_path:
-        (destination_row, destination_column) = destination_node[0:2]
-        if abs(origin_row - destination_row) + abs(origin_column - destination_column) <= nearly_there:
-            return origin_node, destination_node
-        
-    #Reference the last node on the destination list vs origin path
-    destination_node = destination_path[-1]
-    (destination_row, destination_column) = destination_node[0:2]
-    for origin_node in origin_path:
-        (origin_row, origin_column) = origin_node[0:2]
-        if abs(origin_row - destination_row) + abs(origin_column - destination_column) <= nearly_there:
-            return origin_node, destination_node
-        
-    return False
 #Adding weighted travel based on distance to target and dimensions of maze
-def get_steps(path,map):
+def get_steps(path, map):
     weight_list =[]
     origin = path[0]
     last_step = path[len(path) - 1]
@@ -83,55 +64,34 @@ def get_steps(path,map):
         steps.append(step[1])
     return steps
 
-
-    
-def get_next_node(path, queue, map):
-    
-    steps = get_steps(path, map)
-    if queue:
+def find_the_distance(start, map, destination):
+    path_traveled =[start]
+    nodes_to_visit = [start]
+    while nodes_to_visit and not is_visited(destination[0],destination[1],path_traveled):
+        current_node = nodes_to_visit.pop(0)
+        steps = get_steps(path_traveled, map)
         for step in steps:
             (step_row,step_column) = step
-            (row, column, distance) = queue[0]
+            (row, column, distance) = current_node
             new_row = row + step_row
             new_column = column + step_column
             if not within_bounds((new_row,new_column), map):
                 continue
-            if not is_visited(new_row, new_column, path) and map[new_row][new_column] != 1:
+            if not is_visited(new_row, new_column, path_traveled) and map[new_row][new_column] != 1:
                 #print(is_visited(new_row, new_column, path))
-                path.append((new_row, new_column, distance+1))
-                queue.append((new_row, new_column, distance+1))
+                path_traveled.append((new_row, new_column, distance+1))
+                nodes_to_visit.append((new_row, new_column, distance+1))
                 #print('Queue:',queue)
                 #print('Path:', path)
-
-        next_node = queue.pop(0)
-    #path.append(next_node)
-    
-    return 
-
-def navigate(origin_path, origin_queue, destination_path, destination_queue, map):
-    path_found = within_one(origin_path, destination_path)
-    
-    while not (path_found):
-
-        get_next_node(origin_path, origin_queue, map)
-        found_from_origin = within_one(origin_path, destination_path)
-
-        get_next_node(destination_path, destination_queue, map)
-        found_from_destination = within_one(origin_path, destination_path)
-
-        if found_from_origin or found_from_destination:
-            path_found = within_one(origin_path, destination_path)
-    #print('Path found: ', path_found[0],path_found[1])
-    return path_found[0][2] + path_found[1][2] +1
+    return path_traveled[len(path_traveled)-1][2]
 
 
 def solution(map):
-    origin_path = [(0,0,1)] #(row,column,distance)
-    destination_path = [(len(map)-1,len(map[0])-1, 1)] #(row,column,distance)
-    origin_queue = origin_path[:]
-    destination_queue = destination_path[:]
-    #print(origin_queue, destination_queue)
-    return navigate(origin_path, origin_queue, destination_path, destination_queue, map)
+    origin_node = (0,0,1) #(row,column,distance)
+    destination_node = (len(map)-1,len(map[0])-1, 1) #(row,column,distance)
+    
+    
+    return find_the_distance(origin_node, map, destination_node)
 
 example1 = [
     [0,1,1,0],
@@ -172,7 +132,7 @@ example5 = [
     [0,0,1,1],
     [0,0,1,0]
 ]
-print(solution(example5))
+#print(solution(example5))
 
 example6 = [
     [0,0,0,0,0],
