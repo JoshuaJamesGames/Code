@@ -12,12 +12,8 @@
 #Perform a depth first search from both ends weighing navigation 
 #   Positive from origin
 #   Negative from destination
-#If paths come within one (1) distance of each other - found the path
 #Check nearness first - might be a small matrix (2x2)
-
-#Nearly there distance
-#How many steps from one node to another
-nearly_there = 2
+import copy
 
 #Stay within bounds while navigating
 def within_bounds(node, map):
@@ -67,7 +63,8 @@ def get_steps(path, map):
 def find_the_distance(start, map, destination):
     path_traveled =[start]
     nodes_to_visit = [start]
-    while nodes_to_visit and not is_visited(destination[0],destination[1],path_traveled):
+    destination_reached = False
+    while nodes_to_visit and not destination_reached:
         current_node = nodes_to_visit.pop(0)
         steps = get_steps(path_traveled, map)
         for step in steps:
@@ -78,20 +75,37 @@ def find_the_distance(start, map, destination):
             if not within_bounds((new_row,new_column), map):
                 continue
             if not is_visited(new_row, new_column, path_traveled) and map[new_row][new_column] != 1:
-                #print(is_visited(new_row, new_column, path))
                 path_traveled.append((new_row, new_column, distance+1))
                 nodes_to_visit.append((new_row, new_column, distance+1))
-                #print('Queue:',queue)
-                #print('Path:', path)
-    return path_traveled[len(path_traveled)-1][2]
+                if is_visited(destination[0],destination[1],path_traveled):
+                    destination_reached = path_traveled[len(path_traveled)-1][2]
+                
+    return destination_reached
 
 
 def solution(map):
     origin_node = (0,0,1) #(row,column,distance)
     destination_node = (len(map)-1,len(map[0])-1, 1) #(row,column,distance)
+    shortest_distance = len(map) + len(map[0]) -1 #This is the minimum with 1 wall
+    max_distance = 201    
+    distance = max_distance
+    for row in range(len(map)):
+        for column in range(len(map[row])):
+            if map[row][column] == 1: #I could leave this off, but no
+                copy_map = copy.deepcopy(map)                
+                copy_map[row][column] = 0
+                if find_the_distance(origin_node,copy_map,(row,column)) and find_the_distance(destination_node, copy_map, (row,column)):
+                    new_distance = find_the_distance(origin_node,copy_map,(row,column)) + find_the_distance(destination_node, copy_map, (row,column)) -1
+                    #print(find_the_distance(origin_node,copy_map,(row,column)), find_the_distance(destination_node, copy_map, (row,column)), (row,column))
+                    if new_distance == shortest_distance:
+                        return new_distance
+                    else: 
+                        #print(distance, new_distance)
+                        distance = min(distance, new_distance)
+    return distance
+
     
-    
-    return find_the_distance(origin_node, map, destination_node)
+    #return find_the_distance(origin_node, map, destination_node)
 
 example1 = [
     [0,1,1,0],
@@ -112,7 +126,7 @@ example2 = [
 print(solution(example2))
 
 example3 = [
-    [0,0],
+    [0,1],
     [0,0]
     ]
 print(solution(example3))
@@ -132,7 +146,7 @@ example5 = [
     [0,0,1,1],
     [0,0,1,0]
 ]
-#print(solution(example5))
+print(solution(example5))
 
 example6 = [
     [0,0,0,0,0],
@@ -140,6 +154,7 @@ example6 = [
     [0,0,1,1,0],
     [0,1,1,0,1],
     [0,1,0,0,0],
+    [0,0,0,1,1],
     [0,0,0,1,0]
     ]
 print(solution(example6))
