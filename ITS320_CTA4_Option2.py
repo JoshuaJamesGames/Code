@@ -14,7 +14,8 @@ class_grades = []
 #Inform the user of thier purpose and how the output will be floats
 #We still aren't using input sanitation so I'm expecting accurate input
 print('I will ask you for 5 grades and then output some statistics.')
-print('Please use numbers, output will be in decimal format.')
+print('Please use numbers with decimals (floating point numbers).') 
+print('Output will be in decimal format.')
 
 #The input loop : 5 loops starting at 1 - Using the range index in the prompt
 for grade in range(1,6):
