@@ -43,36 +43,54 @@ import math
 
 class Complex(object):
     def __init__(self, real=0, imaginary=0):
-        self.real = float(real)
-        self.imaginary = float(imaginary)
+        self.real = real
+        self.imaginary = imaginary
 
     def __add__(self, no):
-        # enter your code here
+        real = self.real + no.real
+        imaginary = self.imaginary + no.imaginary
         return Complex(real, imaginary)
 
     def __sub__(self, no):
-        # enter your code here       
+        real = self.real - no.real
+        imaginary = self.imaginary - no.imaginary      
         return Complex(real, imaginary)
 
     def __mul__(self, no):
-        # enter your code here
+        real = ((self.real * no.real) - (self.imaginary * no.imaginary))
+        imaginary = ((self.imaginary * no.real) + (self.real * no.imaginary))
         return Complex(real, imaginary)
 
     def __truediv__(self, no):
-        # enter your code here
+        real = ((self.real * no.real) + (self.imaginary * no.imaginary)) / (no.real**2 + no.imaginary**2)
+        imaginary = ((self.imaginary * no.real) - (self.real * no.imaginary)) / (no.real**2 + no.imaginary**2)
         return Complex(real, imaginary)
 
     def mod(self):
-        # enter your code here
+        real = math.sqrt(self.real**2 + self.imaginary**2)
         return Complex(real, 0)
 
     def __str__(self):
-        # enter your code here
-        return result
+        real_string = f'{self.real:.2f}'
+        if self.imaginary < 0:
+            imaginary_string = f'{self.imaginary:.2f}'
+        else:
+            imaginary_string = f'+{self.imaginary:.2f}'
+        return real_string+imaginary_string+'i'
 
 # put this code in a main method
-C = map(float, input().split())
-D = map(float, input().split())
+#map() returns a list floats from the input after splitting
+#C = map(float, input().split())
+#D = map(float, input().split())
+C = [2,1]
+D = [5,6]
+
+#In this instance the * operator is creating a tuple for the variables to intantiate 2 Complex objects
 x = Complex(*C)
 y = Complex(*D)
+
+#Here we are using join()-ing the results of a series of operations that are turned
+#into strings, output as a list, and '\n' (new-lines) are appended between them to achieve the 
+#desired output format
+#print ('\n'.join(map(str, [x+y, x-y, x*y, x/y]))) 
 print ('\n'.join(map(str, [x+y, x-y, x*y, x/y, x.mod(), y.mod()]))) 
