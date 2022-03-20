@@ -13,8 +13,8 @@ strings_to_reverse = []
 num_of_strings = 3
 
 #Some output to get the user ready to input some strings
-print(f'I will ask you for {num_of_strings} words.')
-print('Once I have collected the words, I will reverse each word,')
+print(f'This program will ask you for {num_of_strings} strings.')
+print('Once I have collected them, it will reverse each string,')
 print('reverse their order, concatenate them, and output the result.\n')
 
 #A for loop to collect input from the user with prompts
