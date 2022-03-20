@@ -78,19 +78,32 @@ class Complex(object):
             imaginary_string = f'+{self.imaginary:.2f}'
         return real_string+imaginary_string+'i'
 
-# put this code in a main method
-#map() returns a list floats from the input after splitting
-#C = map(float, input().split())
-#D = map(float, input().split())
-C = [2,1]
-D = [5,6]
+def main():
+    #Some output to get the user ready to input some strings
+    print('This program will ask you for two pairs of numbers.')
+    print('Each pair represents a complex number such as "A + Bi"')
+    print('The numbers should be input separated by a space. Ex: 2 1')
+    print('Once both have been collected it will output a series of six operations')
+    print('Addition, subtraction, multiplication, division, and separate modulus.')
+    print('Each on their own line.\n')
 
-#In this instance the * operator is creating a tuple for the variables to intantiate 2 Complex objects
-x = Complex(*C)
-y = Complex(*D)
+    #Collect input from the user with 2 prompts instead of a loop because
+    #the assignment contains mandatory code usage.
+    #Req: put this code in a main method
 
-#Here we are using join()-ing the results of a series of operations that are turned
-#into strings, output as a list, and '\n' (new-lines) are appended between them to achieve the 
-#desired output format
-#print ('\n'.join(map(str, [x+y, x-y, x*y, x/y]))) 
-print ('\n'.join(map(str, [x+y, x-y, x*y, x/y, x.mod(), y.mod()]))) 
+    #map() returns a list floats from the input after splitting
+    C = map(float, input('What is the first pair of numbers: ').split())
+    D = map(float, input('What is the second pair of numbers: ').split())
+    
+    #In this instance the * operator is creating a tuple for the variables to intantiate 2 Complex objects
+    x = Complex(*C)
+    y = Complex(*D)
+
+    #Here we are using join()-ing the results of a series of operations that are turned
+    #into strings, output as a list, and '\n' (new-lines) are appended between them to achieve the 
+    #desired output format
+    print() 
+    print ('\n'.join(map(str, [x+y, x-y, x*y, x/y, x.mod(), y.mod()]))) 
+
+if __name__=='__main__':
+    main()
