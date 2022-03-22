@@ -1,3 +1,5 @@
+#Critical Thinking Module 1, Option 1 - Print an ASCII Mouse
+#Good first program
 print('         (\-. ')
 print('         / _`>')
 print(' _)     / _)= ')
