@@ -42,35 +42,35 @@
 import math
 
 class Complex(object):
-    def __init__(self, real=0, imaginary=0):
+    def __init__(self, real=0, imaginary=0): #Adding defaults of 0 in case only 1 number is provided
         self.real = real
         self.imaginary = imaginary
 
-    def __add__(self, no):
+    def __add__(self, no): #Overriding the addition operator
         real = self.real + no.real
         imaginary = self.imaginary + no.imaginary
         return Complex(real, imaginary)
 
-    def __sub__(self, no):
+    def __sub__(self, no): #Overriding the subtraction operator
         real = self.real - no.real
         imaginary = self.imaginary - no.imaginary      
         return Complex(real, imaginary)
 
-    def __mul__(self, no):
+    def __mul__(self, no): #Overriding the Multiplication operator
         real = ((self.real * no.real) - (self.imaginary * no.imaginary))
         imaginary = ((self.imaginary * no.real) + (self.real * no.imaginary))
         return Complex(real, imaginary)
 
-    def __truediv__(self, no):
+    def __truediv__(self, no): #Overriding the Division Operator
         real = ((self.real * no.real) + (self.imaginary * no.imaginary)) / (no.real**2 + no.imaginary**2)
         imaginary = ((self.imaginary * no.real) - (self.real * no.imaginary)) / (no.real**2 + no.imaginary**2)
         return Complex(real, imaginary)
 
-    def mod(self):
+    def mod(self): #Overriding the Modulus Operator
         real = math.sqrt(self.real**2 + self.imaginary**2)
         return Complex(real, 0)
 
-    def __str__(self):
+    def __str__(self): #Overriding __str__ to enable proper printing (.2f) for 2 decimal places
         real_string = f'{self.real:.2f}'
         if self.imaginary < 0:
             imaginary_string = f'{self.imaginary:.2f}'
