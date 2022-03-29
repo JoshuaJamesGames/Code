@@ -58,8 +58,18 @@ def auto_hash(auto):
 def add_auto(inventory, auto):
     inventory.update({auto_hash(auto):auto})    
 
-def rem_auto():
-    pass
+def select_auto(inventory):
+    print('\nThe current inventory is:\n')
+    selection_list = []
+    vehicle_selected = -1
+    for number, (key, vehicle) in enumerate(inventory.items()):
+        print(f'{number+1} {key} {vehicle.get_info()}')
+        selection_list.append(key)
+    vehicle_selected = int(input('Please select a vehicle number: '))
+    return selection_list[vehicle_selected-1]
+
+def rem_auto(inventory, auto_key):
+    del inventory[auto_key]
 
 def update_auto():
     pass
@@ -69,7 +79,7 @@ def show_inventory(inventory):
         for key, vehicle  in inventory.items():
             print(key,vehicle.get_info())
     else:
-        print('No Inventory! You need to add a new vehicle\n')
+        print('\nNo Inventory! You need to add a new vehicle')
 
 def main():
     selected_option = ''
@@ -87,7 +97,7 @@ def main():
         if selected_option == '1':            
             add_auto(inventory, make_auto())
         elif selected_option == '2':
-            rem_auto()
+            rem_auto(inventory, select_auto(inventory))
         elif selected_option == '3':
             update_auto()
         elif selected_option == '4':
