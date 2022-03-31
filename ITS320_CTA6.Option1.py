@@ -92,18 +92,20 @@ def main():
     #Req: put this code in a main method
 
     #map() returns a list floats from the input after splitting
+    print('Let\'s get 2 pairs of numbers for imaginary number math.')
     C = map(float, input('What is the first pair of numbers: ').split())
-    D = map(float, input('What is the second pair of numbers: ').split())
-    
     #In this instance the * operator is creating a tuple for the variables to intantiate 2 Complex objects
     x = Complex(*C)
+    print(f'The first imaginary number x, is {x}.')
+    D = map(float, input('What is the second pair of numbers: ').split())    
     y = Complex(*D)
+    print(f'The second imaginary number y, is {y}.')
 
     #Here we are using join()-ing the results of a series of operations that are turned
     #into strings, output as a list, and '\n' (new-lines) are appended between them to achieve the 
     #desired output format
     print() 
-    print ('\n'.join(map(str, [x+y, x-y, x*y, x/y, x.mod(), y.mod()]))) 
+    print ('\n'.join(map(str, [f'x+y = {x+y}',f'x-y = {x-y}',f'x*y = {x*y}',f'x/y = {x/y}',f'modulus of x = {x.mod()}', f'modulus of y = {y.mod()}']))) 
 
 if __name__=='__main__':
     main()
