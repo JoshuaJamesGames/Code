@@ -59,27 +59,40 @@ def add_auto(inventory, auto):
     inventory.update({auto_hash(auto):auto})    
 
 def select_auto(inventory):
-    print('\nThe current inventory is:\n')
+    
     selection_list = []
-    vehicle_selected = -1
-    for number, (key, vehicle) in enumerate(inventory.items()):
-        print(f'{number+1} {key} {vehicle.get_info()}')
-        selection_list.append(key)
-    vehicle_selected = int(input('Please select a vehicle number: '))
-    return selection_list[vehicle_selected-1]
+    vehicle_selected = None
+    
+    if len(inventory) > 0:   
+        print('\nThe current inventory is:')     
+        for number, (key, vehicle) in enumerate(inventory.items()):
+            vehicle_stats = vehicle.get_info()
+            print(f'({number+1}) {vehicle_stats[3]} {vehicle_stats[2]} {vehicle_stats[0]} {vehicle_stats[1]} with {vehicle_stats[4]} miles')
+            selection_list.append(key)
+        vehicle_selected = int(input('Please select a vehicle number: ')) 
+        return selection_list[vehicle_selected-1]   
+    else:
+        print('\nNo Inventory! You need to add a new vehicle.')  
+            
+    
 
 def rem_auto(inventory, auto_key):
-    del inventory[auto_key]
+    if auto_key:
+        vehicle_stats = inventory[auto_key].get_info()
+        print(f'Removing  {vehicle_stats[3]} {vehicle_stats[2]} {vehicle_stats[0]} {vehicle_stats[1]} with {vehicle_stats[4]} miles')
+        del inventory[auto_key]
 
 def update_auto():
     pass
 
-def show_inventory(inventory):
+def show_inventory(inventory):    
     if len(inventory) > 0:
-        for key, vehicle  in inventory.items():
-            print(key,vehicle.get_info())
+        print('\nCurrent Vehicle Inventory is: ')
+        for number, (key, vehicle) in enumerate(inventory.items()):
+            vehicle_stats = vehicle.get_info()
+            print(f'({number+1}) {vehicle_stats[3]} {vehicle_stats[2]} {vehicle_stats[0]} {vehicle_stats[1]} with {vehicle_stats[4]} miles')
     else:
-        print('\nNo Inventory! You need to add a new vehicle')
+        print('\nNo Inventory! You need to add a new vehicle.')        
 
 def main():
     selected_option = ''
