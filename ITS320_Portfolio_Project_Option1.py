@@ -50,10 +50,14 @@ def make_auto():
     model = input(f'What type of {make} is it? (The model): ')
     color = input(f'What color is the {make} {model}?: ')
     print(f'So far, you have entered a {color} {make} {model}.')
-    year = int(input('What year was it made?: '))
-    mileage = int(input('Finally, how many miles does it have?: '))
+    year = input('What year was it made?: ')
+    mileage = input('Finally, how many miles does it have?: ')
     print(f'\nAdding a {color} {make} {model} made in {year} with {mileage} miles.')
-    new_auto = Automobile(make, model, color, year, mileage)
+    try:
+        new_auto = Automobile(make, model, color, year, mileage)
+    except ValueError:
+        print('Something is wrong with those values! Try again.')
+        new_auto = make_auto()
 
     return new_auto
 
@@ -76,8 +80,14 @@ def select_auto(inventory):
             vehicle_stats = vehicle.get_info()
             print(f'({number+1}) {vehicle_stats[3]} {vehicle_stats[2]} {vehicle_stats[0]} {vehicle_stats[1]} with {vehicle_stats[4]} miles')
             selection_list.append(key)
-        vehicle_selected = int(input('Please select a vehicle number: ')) 
-        return selection_list[vehicle_selected-1]   
+        try:    
+            vehicle_selected = selection_list[int(input('Please select a vehicle number: '))-1]
+            
+        except (ValueError, IndexError):
+            print('That is not on the list.')
+            vehicle_selected = select_auto(inventory)
+
+        return vehicle_selected  
     else:
         print('\nNo Inventory! You need to add a new vehicle.')  
             
@@ -95,8 +105,15 @@ def select_attribute(inventory, auto_key):
         print('\nVehicle attributes: ')
         for index, attribute in enumerate(attribute_list):
             print(f'({index+1}) {attribute}')
-        attribute_selected = int(input('\nSelect an attribute to update: '))        
-        return (attribute_selected -1)
+        try:    
+            attribute_selected = int(input('\nSelect an attribute to update: ')) -1
+            attribute_list[attribute_selected]
+
+        except (ValueError, IndexError):
+            print('That is not an attribute on the list.')
+            attribute_selected = select_attribute(inventory, auto_key)
+
+        return attribute_selected
 
 
 def update_auto(inventory, auto_key, attribute_selected):
@@ -107,7 +124,11 @@ def update_auto(inventory, auto_key, attribute_selected):
         print(f'You have selected to update the {vehicle_keys[attribute_selected]}.')
         vehicle_stats[attribute_selected] = input(f'Current value is {vehicle_stats[attribute_selected]}, What is the new value?: ')
         print(f'Updating {vehicle_keys[attribute_selected]} from {old_value} to {vehicle_stats[attribute_selected]}')
-        inventory[auto_key].update_info(*vehicle_stats)
+        try:
+            inventory[auto_key].update_info(*vehicle_stats)
+        except ValueError:
+            print('Something is wrong with that value!.')
+            update_auto(inventory, auto_key, attribute_selected)
     
 
 def show_inventory(inventory):    
@@ -124,7 +145,7 @@ def save_inventory(inventory):
     if save_response.lower() == 'y':
         save_file = open('ITS320_Auto_Inventory.txt', 'w')
         if len(inventory) > 0:
-            save_file.write('\nCurrent Saved Inventory includes:\n')
+            save_file.write('Current Saved Inventory includes:\n')
             for number, (key, vehicle) in enumerate(inventory.items()):
                 vehicle_stats = vehicle.get_info()
                 save_file.write(f'({number+1}) {vehicle_stats[3]} {vehicle_stats[2]} {vehicle_stats[0]} {vehicle_stats[1]} with {vehicle_stats[4]} miles\n')
@@ -146,8 +167,8 @@ def main():
         print('(q) Quit the program.')
         selected_option = input('What would you like to do?: ')
 
-        if selected_option == '1':            
-            add_auto(inventory, make_auto())
+        if selected_option == '1':
+            add_auto(inventory, make_auto())            
         elif selected_option == '2':
             rem_auto(inventory, select_auto(inventory))
         elif selected_option == '3':
