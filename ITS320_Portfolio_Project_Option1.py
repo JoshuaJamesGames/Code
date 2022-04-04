@@ -22,13 +22,20 @@ from random import random
 
 class Automobile:
     def __init__(self, make, model, color, year, mileage):
-        self.__make = make
-        self.__model = model
-        self.__color = color
-        self.__year = year
-        self.__mileage = mileage
+        self.__make = str(make)
+        self.__model = str(model)
+        self.__color = str(color)
+        self.__year = int(year)
+        self.__mileage = int(mileage)
     def get_info(self):
-        return [self.__make, self.__model, self.__color, str(self.__year), str(self.__mileage)]
+        return [self.__make, self.__model, self.__color, self.__year, self.__mileage]
+    def update_info(self, make, model, color, year, mileage):
+        self.__make = str(make)
+        self.__model = str(model)
+        self.__color = str(color)
+        self.__year = int(year)
+        self.__mileage = int(mileage)
+
 
 def make_auto():
     make = ''
@@ -51,7 +58,7 @@ def make_auto():
     return new_auto
 
 def auto_hash(auto):
-    hash_prefix = ''.join(attrib[0] for attrib in auto.get_info())
+    hash_prefix = ''.join(str(attrib)[0] for attrib in auto.get_info())
     hash_suffix = f'{(time()+random()*10000)%10000000:.0f}'
     return hash_prefix + hash_suffix
 
@@ -83,17 +90,25 @@ def rem_auto(inventory, auto_key):
         del inventory[auto_key]
 
 def select_attribute(inventory, auto_key):
-    attribute_list = inventory[auto_key].get_info()
-    print('\nVehicle attributes: ')
-    for index, attribute in enumerate(attribute_list):
-        print(f'({index+1}) {attribute}')
-    attribute_selected = int(input('\nSelect an attribute to update: '))
-    return (attribute_selected -1)
+    if auto_key:
+        attribute_list = inventory[auto_key].get_info()
+        print('\nVehicle attributes: ')
+        for index, attribute in enumerate(attribute_list):
+            print(f'({index+1}) {attribute}')
+        attribute_selected = int(input('\nSelect an attribute to update: '))        
+        return (attribute_selected -1)
 
 
 def update_auto(inventory, auto_key, attribute_selected):
-
-    pass
+    if auto_key:
+        vehicle_stats = inventory[auto_key].get_info()
+        vehicle_keys = ['make', 'model', 'color', 'year', 'mileage']
+        old_value = vehicle_stats[attribute_selected]
+        print(f'You have selected to update the {vehicle_keys[attribute_selected]}.')
+        vehicle_stats[attribute_selected] = input(f'Current value is {vehicle_stats[attribute_selected]}, What is the new value?: ')
+        print(f'Updating {vehicle_keys[attribute_selected]} from {old_value} to {vehicle_stats[attribute_selected]}')
+        inventory[auto_key].update_info(*vehicle_stats)
+    
 
 def show_inventory(inventory):    
     if len(inventory) > 0:
@@ -102,7 +117,21 @@ def show_inventory(inventory):
             vehicle_stats = vehicle.get_info()
             print(f'({number+1}) {vehicle_stats[3]} {vehicle_stats[2]} {vehicle_stats[0]} {vehicle_stats[1]} with {vehicle_stats[4]} miles')
     else:
-        print('\nNo Inventory! You need to add a new vehicle.')        
+        print('\nNo Inventory! You need to add a new vehicle.')
+
+def save_inventory(inventory):
+    save_response = input('Would you like to save the inventory? (Y/N): ')
+    if save_response.lower() == 'y':
+        save_file = open('ITS320_Auto_Inventory.txt', 'w')
+        if len(inventory) > 0:
+            save_file.write('\nCurrent Saved Inventory includes:\n')
+            for number, (key, vehicle) in enumerate(inventory.items()):
+                vehicle_stats = vehicle.get_info()
+                save_file.write(f'({number+1}) {vehicle_stats[3]} {vehicle_stats[2]} {vehicle_stats[0]} {vehicle_stats[1]} with {vehicle_stats[4]} miles\n')
+            save_file.close()
+        else:
+            print('\nNo Inventory!')
+        
 
 def main():
     selected_option = ''
@@ -128,6 +157,7 @@ def main():
         elif selected_option == '4':
             show_inventory(inventory)
         elif selected_option == 'q':
+            save_inventory(inventory)
             print('Goodbye!')
             break
         else:

@@ -1,0 +1,3 @@
+
+Current Vehicle Inventory is:
+(1) 1996 Red Toyota Tacoma with 260000 miles
