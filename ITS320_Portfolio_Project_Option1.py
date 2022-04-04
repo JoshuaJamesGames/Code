@@ -82,7 +82,17 @@ def rem_auto(inventory, auto_key):
         print(f'Removing  {vehicle_stats[3]} {vehicle_stats[2]} {vehicle_stats[0]} {vehicle_stats[1]} with {vehicle_stats[4]} miles')
         del inventory[auto_key]
 
-def update_auto():
+def select_attribute(inventory, auto_key):
+    attribute_list = inventory[auto_key].get_info()
+    print('\nVehicle attributes: ')
+    for index, attribute in enumerate(attribute_list):
+        print(f'({index+1}) {attribute}')
+    attribute_selected = int(input('\nSelect an attribute to update: '))
+    return (attribute_selected -1)
+
+
+def update_auto(inventory, auto_key, attribute_selected):
+
     pass
 
 def show_inventory(inventory):    
@@ -112,7 +122,9 @@ def main():
         elif selected_option == '2':
             rem_auto(inventory, select_auto(inventory))
         elif selected_option == '3':
-            update_auto()
+            key = select_auto(inventory)
+            attribute_num = select_attribute(inventory, key)
+            update_auto(inventory, key, attribute_num)
         elif selected_option == '4':
             show_inventory(inventory)
         elif selected_option == 'q':
