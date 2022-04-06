@@ -44,8 +44,13 @@ class Automobile:
         self.__year = int(year)
         self.__mileage = int(mileage)
     
+    #Overriding the __str__ to create human-readable Automobile output with print()
     def __str__(self):
         return f"{self.__year} {self.__color} {self.__make} {self.__model} with {self.__mileage} miles"
+
+class YesOrNo(Exception):
+    '''When an answer is not Y/N'''
+    pass
         
 #Walks the user through the creation of an Automobile object
 def make_auto():
@@ -140,60 +145,79 @@ def select_attribute(inventory, auto_key):
     if auto_key:
         #auto_stats is needed to display attributes and values
         auto_stats = inventory[auto_key].get_info()
+        #attribute_list is used to reference the attribute by number(index)
         attribute_list = list(inventory[auto_key].get_info().values())
         print('\nVehicle attributes: ')
         for index, (attribute, value) in enumerate(auto_stats.items()):
             print(f'({index+1}) {attribute}: {value}')
+        #Attribute correlates to number selected - offset by -1 for readability
         try:    
             attribute_selected = int(input('\nSelect an attribute to update: ')) -1
             attribute_list[attribute_selected]
-
+        #Trying to catch errors of value and index
         except (ValueError, IndexError):
             print('That is not an attribute on the list.')
             attribute_selected = select_attribute(inventory, auto_key)
 
         return attribute_selected
 
-
+#Uses the selected auto_key and attribute to walk the user through an update
 def update_auto(inventory, auto_key, attribute_selected):
     if auto_key:
+        #Pick apart the get_info() to create interesting dialogue for the user
         vehicle_stats = list(inventory[auto_key].get_info().values())
         vehicle_keys = list(inventory[auto_key].get_info().keys())
         old_value = vehicle_stats[attribute_selected]
+
         print(f'You have selected to update the {vehicle_keys[attribute_selected]}.')
         vehicle_stats[attribute_selected] = input(f'Current value is {vehicle_stats[attribute_selected]}, What is the new value?: ')
         print(f'Updating {vehicle_keys[attribute_selected]} from {old_value} to {vehicle_stats[attribute_selected]}')
+        #Update the values with an array created from the class
         try:
             inventory[auto_key].update_info(*vehicle_stats)
+        #Catch any type-casting errors like using letters for year or miles    
         except ValueError:
             print('Something is wrong with that value!.')
             update_auto(inventory, auto_key, attribute_selected)
     
-
+#Loops through the current inventory and prints with a number
+#Gives feedback if there is no inventory
 def show_inventory(inventory):    
     if len(inventory) > 0:
         print('\nCurrent Vehicle Inventory is: ')
-        for number, (key, vehicle) in enumerate(inventory.items()):            
+        for number, vehicle in enumerate(inventory.values()):            
             print(f'({number+1}) {vehicle}')
     else:
         print('\nNo Inventory! You need to add a new vehicle.')
 
+#Loops through the inventory after asking the user if they would like to save
 def save_inventory(inventory):
-    save_response = input('Would you like to save the inventory? (Y/N): ')
-    if save_response.lower() == 'y':
-        save_file = open('ITS320_Auto_Inventory.txt', 'w')
-        if len(inventory) > 0:
-            save_file.write('Current Saved Inventory includes:\n')
-            for number, (key, vehicle) in enumerate(inventory.items()):                
-                save_file.write(f'({number+1}) ID# {key}: {vehicle}\n')
-            save_file.close()
-        else:
-            print('\nNo Inventory!')
-        
+    #Using my custom exception to verify if the answer is 'y' or 'n'
+    try:
+        save_response = input('Would you like to save the inventory? (Y/N): ').lower()
+        #Raise YesOrNo if input is neither 'y' or 'n'
+        if save_response != 'y' and save_response != 'n':
+            raise YesOrNo
+        if save_response == 'y':
+            save_file = open('ITS320_Auto_Inventory.txt', 'w')
+            if len(inventory) > 0:
+                save_file.write('Current Saved Inventory includes:\n')
+                for number, (key, vehicle) in enumerate(inventory.items()):                
+                    save_file.write(f'({number+1}) ID# {key}: {vehicle}\n')
+                save_file.close()
+            else:
+                print('\nNo Inventory!')
+    except YesOrNo:
+        print('That is not a Y/N answer.')
+        save_inventory(inventory)
 
+        
+#Creates an input loop until the user presses 'q' to exit and asks to save the current inventory
 def main():
+    #Selected option and inventory start empty
     selected_option = ''
     inventory = {}
+    #Welcome prompt and a list of options
     print('Welcome to the Vehicle Inventory Program!')
     print('Select an option from the list.')
     while selected_option != 'q':
@@ -204,6 +228,8 @@ def main():
         print('(q) Quit the program.')
         selected_option = input('What would you like to do?: ')
 
+        #Stack of if/elif/else for the options above
+        #Using well named functions self comments their actions
         if selected_option == '1':
             add_auto(inventory, make_auto())            
         elif selected_option == '2':
@@ -216,13 +242,12 @@ def main():
             show_inventory(inventory)
         elif selected_option == 'q':
             save_inventory(inventory)
-            print('Goodbye!')
+            print('\nGoodbye!')
             
         else:
             print('That option isn\'t on the list')
 
 
-
-
+#Included in case someone wants to import my Automobile and YesOrNo classes
 if __name__ == '__main__':
     main()
