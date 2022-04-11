@@ -19,8 +19,26 @@
 #The wording "lowest ID #s" indicates I will be trying all combinations of
 #bunnies
 
+#From https://en.wikipedia.org/wiki/Bellman%E2%80%93Ford_algorithm
+def bellmanFord(graph, source):
+    distances = [float('inf')] * len(graph)
+    distances[source] = 0
+   
+
+    for each in range(len(distances)-1):
+        for node in range(len(graph)):
+            for destination in range(len(graph[node])):
+                if distances[node] + graph[node][destination] < distances[destination]:
+                    distances[destination] = distances[node] + graph[node][destination]
+
+    return distances
+
+
+
+
 def solution(times, times_limit):
-    # Your code here
+    print(bellmanFord(times, 0))
+    pass
 
 #Sample 1 expected answer [1,2]
 print(solution([
