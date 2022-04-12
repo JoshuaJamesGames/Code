@@ -59,33 +59,38 @@ def bunnyCombinations(bunny_list, combo_length):
     return combo_list
 
 def get_rescue_times(path_times, bunny_permutations, times_limit):
-    rescue_times = []
+    rescue_indexes = []
     for perm in bunny_permutations:
         travel_time = 0
         travel_time += path_times[0][perm[0]]
         for index in range(len(perm)-1):
             travel_time += path_times[perm[index]][perm[index+1]]
         travel_time += path_times[perm[-1]][-1]
-        rescue_times.append(travel_time)
-    return rescue_times
+        if travel_time <= times_limit:
+            rescue_indexes.append(sorted(perm))
+    return rescue_indexes
 
 
 
 def solution(times, times_limit):
     num_bunnies = len(times)-2
     bunny_indexes = [x for x in range(1,num_bunnies+1)]
+    best_rescue_indexes = []
 
     path_times = getAllDistances(times)
-    print(path_times)
+    #print(path_times)       
+   
+    for num in range(1, num_bunnies+1):
+        bunny_permutations = list(permutations(bunny_indexes, num))
+        rescue_indexes = get_rescue_times(path_times, bunny_permutations, times_limit)
+        if len(rescue_indexes) >0:
+            best_rescue_indexes = sorted(rescue_indexes)
+    #print(best_rescue_indexes)
+    best_rescue = best_rescue_indexes[0]
 
-    bunny_permutations = list(permutations(bunny_indexes))    
-    print(bunny_permutations)
-
-    rescut_times = get_rescue_times(path_times, bunny_permutations, times_limit)
-    print(rescut_times)
-
-
-    pass
+    best_rescue = [x-1 for x in best_rescue]
+    #print(best_rescue)
+    return best_rescue
 
 #Sample 1 expected answer [1,2]
 print(solution([
