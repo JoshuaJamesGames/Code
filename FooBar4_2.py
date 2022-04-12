@@ -16,7 +16,7 @@
 #Bellman-Ford seems like the algorithm of choice for path values
 #and to identify cycles
 
-#The wording "lowest ID #s" indicates I will be trying all combinations of
+#The wording "lowest ID #s" indicates I will be trying all permutations of
 #bunnies
 
 #I need permutations of the bunny ID #s
@@ -35,6 +35,13 @@ def bellmanFord(graph, source):
                     distances[destination] = distances[node] + graph[node][destination]
 
     return distances
+
+def getAllDistances(graph):
+    distance_graph = []
+    for node in range(len(graph)):
+        distance_graph.append(bellmanFord(graph, node))
+    return distance_graph
+
 #This was a great learning experience...but I need permutations not combinations
 def bunnyCombinations(bunny_list, combo_length):
     if combo_length == 0:
@@ -51,14 +58,33 @@ def bunnyCombinations(bunny_list, combo_length):
              
     return combo_list
 
+def get_rescue_times(path_times, bunny_permutations, times_limit):
+    rescue_times = []
+    for perm in bunny_permutations:
+        travel_time = 0
+        travel_time += path_times[0][perm[0]]
+        for index in range(len(perm)-1):
+            travel_time += path_times[perm[index]][perm[index+1]]
+        travel_time += path_times[perm[-1]][-1]
+        rescue_times.append(travel_time)
+    return rescue_times
+
+
 
 def solution(times, times_limit):
     num_bunnies = len(times)-2
     bunny_indexes = [x for x in range(1,num_bunnies+1)]
 
-    print(bellmanFord(times, 0))
-    
-    print(list(permutations(bunny_indexes)))
+    path_times = getAllDistances(times)
+    print(path_times)
+
+    bunny_permutations = list(permutations(bunny_indexes))    
+    print(bunny_permutations)
+
+    rescut_times = get_rescue_times(path_times, bunny_permutations, times_limit)
+    print(rescut_times)
+
+
     pass
 
 #Sample 1 expected answer [1,2]
