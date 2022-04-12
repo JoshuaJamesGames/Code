@@ -36,6 +36,9 @@ def bellmanFord(graph, source):
 
     return distances
 
+def bellmanFordNegTest(graph):
+    pass
+
 def getAllDistances(graph):
     distance_graph = []
     for node in range(len(graph)):
@@ -76,20 +79,21 @@ def solution(times, times_limit):
     num_bunnies = len(times)-2
     bunny_indexes = [x for x in range(1,num_bunnies+1)]
     best_rescue_indexes = []
+    best_rescue = []
 
     path_times = getAllDistances(times)
-    #print(path_times)       
+    print(path_times)       
    
     for num in range(1, num_bunnies+1):
         bunny_permutations = list(permutations(bunny_indexes, num))
         rescue_indexes = get_rescue_times(path_times, bunny_permutations, times_limit)
         if len(rescue_indexes) >0:
             best_rescue_indexes = sorted(rescue_indexes)
-    #print(best_rescue_indexes)
-    best_rescue = best_rescue_indexes[0]
-
-    best_rescue = [x-1 for x in best_rescue]
-    #print(best_rescue)
+    print(best_rescue_indexes)
+    if len(best_rescue_indexes) > 0: 
+        best_rescue = best_rescue_indexes[0]
+        best_rescue = [x-1 for x in best_rescue]
+        print(best_rescue)
     return best_rescue
 
 #Sample 1 expected answer [1,2]
@@ -108,13 +112,13 @@ print(solution([
     [1, 1, 0, 1, 1], 
     [1, 1, 1, 0, 1], 
     [1, 1, 1, 1, 0]
-],3))
+],0))
 
 print(solution([
     [0, 1, 1, 1, 1, 1], 
     [1, 0, 1, 1, 1, 1], 
     [1, 1, 0, 1, 1, 1], 
     [1, 1, 1, 0, 1, 1], 
-    [1, 1, 1, 1, 0, 1],
-    [1, 1, 1, 1, 1, 0]
+    [1, 1, 1, 1, 0, -1],
+    [1, 1, 1, 1, -1, 0]
 ],4))
