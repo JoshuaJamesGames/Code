@@ -87,13 +87,13 @@ def solution(times, times_limit):
     for num in range(1, num_bunnies+1):
         bunny_permutations = list(permutations(bunny_indexes, num))
         rescue_indexes = get_rescue_times(path_times, bunny_permutations, times_limit)
-        if len(rescue_indexes) >0:
+        if len(rescue_indexes) > 0:
             best_rescue_indexes = sorted(rescue_indexes)
-    print(best_rescue_indexes)
+    #print(best_rescue_indexes)
     if len(best_rescue_indexes) > 0: 
         best_rescue = best_rescue_indexes[0]
         best_rescue = [x-1 for x in best_rescue]
-        print(best_rescue)
+        #print(best_rescue)
     return best_rescue
 
 #Sample 1 expected answer [1,2]
@@ -112,8 +112,10 @@ print(solution([
     [1, 1, 0, 1, 1], 
     [1, 1, 1, 0, 1], 
     [1, 1, 1, 1, 0]
-],0))
+],3))
 
+#Sample 3 has a negative cycle
+#Works even though no negative test is made with 0 time
 print(solution([
     [0, 1, 1, 1, 1, 1], 
     [1, 0, 1, 1, 1, 1], 
@@ -121,4 +123,19 @@ print(solution([
     [1, 1, 1, 0, 1, 1], 
     [1, 1, 1, 1, 0, -1],
     [1, 1, 1, 1, -1, 0]
-],4))
+],0))
+#Trying a max_bunny size graph
+print(solution([
+    [0, 1, 1, 1, 1, 1, 1], 
+    [1, 0, 1, 1, 1, 1, 1], 
+    [1, 1, 0, 1, 1, 1, 1], 
+    [1, 1, 1, 0, 1, 1, 1], 
+    [1, 1, 1, 1, 0, 1, 1],
+    [1, 1, 1, 1, 1, 0, 1],
+    [1, 1, 1, 1, 1, 1, 0]
+],6))
+#What if there are 0 bunnies
+print(solution([
+    [0, 1],      
+    [1, 0]
+],0))
