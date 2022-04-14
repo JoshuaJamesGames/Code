@@ -21,11 +21,13 @@
 
 #I need permutations of the bunny ID #s
 from itertools import permutations
+from operator import neg
 
 #From https://en.wikipedia.org/wiki/Bellman%E2%80%93Ford_algorithm
 def bellmanFord(graph, source):
     distances = [float('inf')] * len(graph)
     distances[source] = 0
+    neg_cycles = False
    
 
     for each in range(len(distances)-1):
@@ -34,12 +36,17 @@ def bellmanFord(graph, source):
                 if distances[node] + graph[node][destination] < distances[destination]:
                     distances[destination] = distances[node] + graph[node][destination]
 
+    for each in range(len(distances)-1):
+        for node in range(len(graph)):
+            for destination in range(len(graph[node])):
+                if distances[node] + graph[node][destination] < distances[destination]:
+                    distances[destination] = float('-inf')                  
+    
     return distances
 
-def bellmanFordNegTest(graph):
-    pass
 
 def getAllDistances(graph):
+    
     distance_graph = []
     for node in range(len(graph)):
         distance_graph.append(bellmanFord(graph, node))
@@ -83,12 +90,13 @@ def solution(times, times_limit):
 
     path_times = getAllDistances(times)
     print(path_times)       
-   
-    for num in range(1, num_bunnies+1):
+
+    for num in range(1, num_bunnies + 1):
         bunny_permutations = list(permutations(bunny_indexes, num))
         rescue_indexes = get_rescue_times(path_times, bunny_permutations, times_limit)
         if len(rescue_indexes) > 0:
             best_rescue_indexes = sorted(rescue_indexes)
+            break
     #print(best_rescue_indexes)
     if len(best_rescue_indexes) > 0: 
         best_rescue = best_rescue_indexes[0]
@@ -115,7 +123,6 @@ print(solution([
 ],3))
 
 #Sample 3 has a negative cycle
-#Works even though no negative test is made with 0 time
 print(solution([
     [0, 1, 1, 1, 1, 1], 
     [1, 0, 1, 1, 1, 1], 
@@ -124,6 +131,7 @@ print(solution([
     [1, 1, 1, 1, 0, -1],
     [1, 1, 1, 1, -1, 0]
 ],0))
+
 #Trying a max_bunny size graph
 print(solution([
     [0, 1, 1, 1, 1, 1, 1], 
@@ -134,6 +142,7 @@ print(solution([
     [1, 1, 1, 1, 1, 0, 1],
     [1, 1, 1, 1, 1, 1, 0]
 ],6))
+
 #What if there are 0 bunnies
 print(solution([
     [0, 1],      
