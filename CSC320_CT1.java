@@ -1,5 +1,5 @@
 /**
- * CSC320_CT1
+ * CSC320_CT1 Option 1
  * Develop a program that prints a fake person with the following attributes
  * 
  * First Name
