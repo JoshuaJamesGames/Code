@@ -5,6 +5,20 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "java",
+            "name": "Launch CSC320_CT1",
+            "request": "launch",
+            "mainClass": "CSC320_CT1",
+            "projectName": "Code_aa5595ac"
+        },
+        {
+            "type": "java",
+            "name": "Launch Main",
+            "request": "launch",
+            "mainClass": "Main",
+            "projectName": "Code_aa5595ac"
+        },
+        {
             "name": "Python: Current File",
             "type": "python",
             "request": "launch",
