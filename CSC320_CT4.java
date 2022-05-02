@@ -18,7 +18,7 @@ public class CSC320_CT4 {
         
         //Intro to the program and very brief directions
         System.out.println("Welcome to the Class Grades Statistics Program!");
-        System.out.println("You will enter 10(ten) grades in decimal format ex: 88.5");
+        System.out.println("I will need 10 grades in decimal format ex: 88.5");
 
         //Initialize a class Class - dancing on the border of a reserved word 
         Class students = new Class();
