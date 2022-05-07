@@ -48,9 +48,9 @@ public class CSC320_CT5 {
 
         //Intro for the user followed by a prompt
         System.out.println("Welcome to the Weekly Temperature Program!");
-        System.out.println("(Enter 'Monday'-'Sunday' for single days");
-        System.out.println("'week' for a summary.");
-        System.out.println("What temperature would you like no know?");
+        System.out.print("(Enter 'Monday'-'Sunday' for single days");
+        System.out.println(" or 'week' for a summary.)");
+        System.out.println("\nWhat temperature would you like no know?");
 
         query = scnr.next();
         
@@ -61,14 +61,14 @@ public class CSC320_CT5 {
             if(query.equals("week")){
 
                 printWeeklyTemps(dailyTemps, daysOfWeek);
-                System.out.print("The weekly average temperature was: ");
+                System.out.print("\nThe weekly average temperature was: ");
                 System.out.println(getAvgTemp(dailyTemps));
             
             //Any valid entry in daysOfWeek will print matching temperature
             }else if(daysOfWeek.contains(query)){
 
                 queryIndex = daysOfWeek.indexOf(query);
-                System.out.println("The temperature on " + query + " was: " 
+                System.out.println("\nThe temperature on " + query + " was: " 
                 + dailyTemps.get(queryIndex));
             
             //If query doesn't match "week" or daysOfWeek entry
@@ -79,7 +79,7 @@ public class CSC320_CT5 {
 
             }
 
-            System.out.print("What is your next query? ('quit' to exit): ");
+            System.out.print("\nWhat is your next query? ('quit' to exit): ");
             query = scnr.next();
 
         }
@@ -103,7 +103,7 @@ public class CSC320_CT5 {
     //Prints all the days with temps for the week
     public static void printWeeklyTemps(ArrayList<Double> dailyTemps, ArrayList<String> daysOfWeek){
         
-        System.out.println("The daily temperatures were: ");
+        System.out.println("\nThe daily temperatures were: ");
         for(int i = 0; i < daysOfWeek.size(); i++){
             
             System.out.println(daysOfWeek.get(i) + ": " + dailyTemps.get(i));
