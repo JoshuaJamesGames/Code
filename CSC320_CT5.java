@@ -53,11 +53,11 @@ public class CSC320_CT5 {
                 System.out.print("The weekly average temperature was: ");
                 System.out.println(getAvgTemp(dailyTemps));
 
-            }else if(getTempIndex(query, daysOfWeek)>=0){
+            }else if(daysOfWeek.contains(query)){
 
-                queryIndex = getTempIndex(query, daysOfWeek);
-                System.out.println("The temperature on " + daysOfWeek[queryIndex] + " was: " 
-                + dailyTemps[queryIndex]);
+                queryIndex = daysOfWeek.indexOf(query);
+                System.out.println("The temperature on " + query + " was: " 
+                + dailyTemps.get(queryIndex));
 
             }else{
 
@@ -83,31 +83,22 @@ public class CSC320_CT5 {
         }
     }
 
-    public static int getTempIndex(String query, String[] daysOfWeek){
-        int index = -1;
-        for(int i = 0; i < daysOfWeek.length; i++){
-            if(daysOfWeek[i].equals(query)){
-                index = i;
-            }
-        }
-        return index;
-    }
-
-    public static void printWeeklyTemps(double[] dailyTemps, String[] daysOfWeek){
+    
+    public static void printWeeklyTemps(ArrayList<Double> dailyTemps, ArrayList<String> daysOfWeek){
         
         System.out.println("The daily temperatures were: ");
-        for(int i = 0; i < daysOfWeek.length; i++){
+        for(int i = 0; i < daysOfWeek.size(); i++){
             
-            System.out.println(daysOfWeek[i] + ": " + dailyTemps[i]);
+            System.out.println(daysOfWeek.get(i) + ": " + dailyTemps.get(i));
         }
     }
 
-    public static double getAvgTemp(double[] dailyTemps){
+    public static double getAvgTemp(ArrayList<Double> dailyTemps){
         double sum = 0.0;
-        for(int i = 0; i < dailyTemps.length; i++){
-            sum += dailyTemps[i];
+        for(int i = 0; i < dailyTemps.size(); i++){
+            sum += dailyTemps.get(i);
         }
-        return (Math.round((sum / dailyTemps.length) * 100.0) / 100.0);
+        return (Math.round((sum / dailyTemps.size()) * 100.0) / 100.0);
     }
 
 }
