@@ -14,17 +14,29 @@ the arrays to complete this assignment.
 
 import java.util.Scanner;
 import java.util.Random;
+import java.util.ArrayList;
 
 
 public class CSC320_CT5 {
     public static void main(String[] args) {
-        String[] daysOfWeek = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
-        double[] dailyTemps = new double[daysOfWeek.length];
+        ArrayList<String> daysOfWeek = new ArrayList<String>() {
+            {
+            add("Monday");
+            add("Tuesday");
+            add("Wednesday");
+            add("Thursday");
+            add("Friday");
+            add("Saturday");
+            add("Sunday");
+            }
+        };
+        ArrayList<Double> dailyTemps = new ArrayList<Double>();
         Scanner scnr = new Scanner(System.in);
         String query = "";
         int queryIndex = -1;
+        final int numTemps = daysOfWeek.size();
 
-        setTemps(dailyTemps);
+        setTemps(dailyTemps, numTemps);
 
         System.out.println("Welcome to the Weekly Temperature Program!");
         System.out.println("(Enter 'Monday'-'Sunday' for single days");
@@ -62,10 +74,12 @@ public class CSC320_CT5 {
 
     }
 
-    public static void setTemps(double[] dailyTemps){
+    public static void setTemps(ArrayList<Double> dailyTemps, int numTemps){
         Random rand = new Random();
-        for(int i = 0; i < dailyTemps.length; i++){
-            dailyTemps[i]= Math.round(rand.nextDouble() * 10000.0) / 100.0;
+        double randTemp;
+        for(int i = 0; i < numTemps; i++){
+            randTemp = Math.round(rand.nextDouble() * 10000.0) / 100.0;
+            dailyTemps.set(i, randTemp); 
         }
     }
 
