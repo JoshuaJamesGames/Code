@@ -47,42 +47,43 @@ https://catonmat.net/tools/generate-sqrt2-digits
 */
 
 import java.math.BigDecimal;
-//import java.math.MathContext;
+import java.math.BigInteger;
 import java.math.RoundingMode;
 
 public class Solution {
 
-    String SqrtOfTwoString = "1.4142135623730950488016887242096980785696718753769480731766797379907324784621070388503875343276415727";
-    BigDecimal SqrtOfTwo = new BigDecimal(SqrtOfTwoString);
-
-    public static int BeattySeries(BigDecimal SqrtOfTwo, int N){
+    public static BigInteger BeattySeries(BigDecimal SqrtOfTwo, BigInteger N){
         BigDecimal CminusOne = SqrtOfTwo.subtract(new BigDecimal("1"));
         BigDecimal CminusOneMultiplied = CminusOne.multiply(new BigDecimal(N));
         BigDecimal BigC = CminusOneMultiplied.setScale(0,RoundingMode.FLOOR);
-        int C = BigC.intValue();
+        BigInteger C = BigC.toBigInteger();
 
-        if(N == 0){
-            return 0;
+        if(N.equals(BigInteger.ZERO)){
+            return N;
         }
 
-        return (N*C) + (N*(N+1)/2) - (C*(C+1)/2) - BeattySeries(SqrtOfTwo, C);
+        return (N.multiply(C)).add((N.multiply((N.add(BigInteger.ONE))).divide(BigInteger.TWO))).subtract((C.multiply((C.add(BigInteger.ONE))).divide(BigInteger.TWO))).subtract(BeattySeries(SqrtOfTwo, C));
     }
 
-    public String solution(String s){
+    public static String solution(String s){
 
-        int N = Integer.parseInt(s);
+        BigDecimal SqrtOfTwo = new BigDecimal("1.414213562373095048801688724209698078569671875376948073176679737990732478462107038850387534327641572735013846230912297024924836055850737212644121497099");
 
-        int series = BeattySeries(SqrtOfTwo, N);
+        BigInteger N = new BigInteger(s);
 
-        return Integer.toString(series);
+        BigInteger series = BeattySeries(SqrtOfTwo, N);
+
+        return series.toString();
+        
     }
 
     
-
+}
 
 public static void main(String[] args) {
-    Solution test = new Solution();
-    System.out.println(test.solution("77"));
+    
+    System.out.println(Solution.solution("5"));
+    System.out.println(Solution.solution("100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"));
+    
 
-}
 }
