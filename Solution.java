@@ -78,12 +78,13 @@ public class Solution {
     }
 
     
-}
 
-public static void main(String[] args) {
-    
-    System.out.println(Solution.solution("5"));
-    System.out.println(Solution.solution("100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"));
-    
 
+    public static void main(String[] args) {
+        
+        System.out.println(Solution.solution("5"));
+        System.out.println(Solution.solution("100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"));
+        
+
+    }
 }
