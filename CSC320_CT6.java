@@ -21,37 +21,44 @@ public class CSC320_CT6 {
         final int numInputs = 3;
         String inputString = "";
         String userInput[] = new String[numInputs];
+        Scanner scnr = new Scanner(System.in);
 
         //Intro
         System.out.println(String.format("Please Input %d Strings(Words), and I will repeat them.", numInputs));
         
         //Get Input from user
-        inputString = buildInputString(numInputs);
+        inputString = buildInputString(numInputs, scnr);
+        scnr.close();
         
         //Call method to store user's input into individual array elements
+        System.out.println("\nStoring input...");
+
         userInput = inputToArray(inputString);
         
         //Print out array
         printArray(userInput, "String");
 
+        //Outro
+        System.out.println("\nGoodbye!");
+
     }
 
-    public static String getInput(int inputNumber, String inputDescriptor){
+    public static String getInput(int inputNumber, String inputDescriptor, Scanner scnr){
         
-        Scanner scnr = new Scanner(System.in);
-        System.out.print(String.format("Please enter %s #%d: ",inputDescriptor,inputNumber));
+        
+        System.out.print(String.format("Please enter %s #%d: ", inputDescriptor, inputNumber));
         String response = scnr.next();
-        scnr.close();
+        
         return response;
     }
 
-    public static String buildInputString(int numOfInputs){
+    public static String buildInputString(int numOfInputs, Scanner scnr){
         String userInputString = "";
         
         for(int i = 1; i <= numOfInputs; i++){
-            userInputString = getInput(i, "String");
+            userInputString += getInput(i, "String", scnr);
             if(i != numOfInputs){
-                userInputString = ",";
+                userInputString += ",";
             }
         }
 
@@ -69,8 +76,9 @@ public class CSC320_CT6 {
     }
 
     public static void printArray(String[] printme, String descriptor){
-        for(int i = 0; i < printme.length; i++){
-            System.out.println(String.format("%s #%d was %s.",descriptor, i, printme[i]));
+        System.out.println();
+        for(int i = 0; i < printme.length; i++){            
+            System.out.println(String.format("%s at index %d is %s.",descriptor, i, printme[i]));
         }
     }
 
