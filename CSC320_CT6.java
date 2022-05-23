@@ -13,24 +13,65 @@ success from within method if execution is successful
 Call the method from the main method of the program to demonstrate its 
 functionality by looping through the array and printing the individual values.
 */
+import java.util.Scanner;
 
 public class CSC320_CT6 {
     public static void main(String args[]){
         //Initialize
-        String userInput[] = new String[3];
+        final int numInputs = 3;
+        String inputString = "";
+        String userInput[] = new String[numInputs];
+
         //Intro
-        System.out.println("Please Input 3 Strings(Words) and I will repeat them.");
-
+        System.out.println(String.format("Please Input %d Strings(Words), and I will repeat them.", numInputs));
+        
         //Get Input from user
-
-        //Call method to store user's input into 3 element array
-
+        inputString = buildInputString(numInputs);
+        
+        //Call method to store user's input into individual array elements
+        userInput = inputToArray(inputString);
+        
         //Print out array
-
+        printArray(userInput, "String");
 
     }
 
-    
+    public static String getInput(int inputNumber, String inputDescriptor){
+        
+        Scanner scnr = new Scanner(System.in);
+        System.out.print(String.format("Please enter %s #%d: ",inputDescriptor,inputNumber));
+        String response = scnr.next();
+        scnr.close();
+        return response;
+    }
 
+    public static String buildInputString(int numOfInputs){
+        String userInputString = "";
+        
+        for(int i = 1; i <= numOfInputs; i++){
+            userInputString = getInput(i, "String");
+            if(i != numOfInputs){
+                userInputString = ",";
+            }
+        }
+
+        return userInputString;  
+    }
+
+    public static String[] inputToArray(String inputString){
+        String output[] = new String[inputString.split(",").length];
+        
+        for(int i = 0; i < output.length; i++){
+            output[i] = inputString.split(",")[i];
+        }
+        
+        return output;
+    }
+
+    public static void printArray(String[] printme, String descriptor){
+        for(int i = 0; i < printme.length; i++){
+            System.out.println(String.format("%s #%d was %s.",descriptor, i, printme[i]));
+        }
+    }
 
 }
