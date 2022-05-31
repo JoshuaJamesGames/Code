@@ -137,13 +137,20 @@ public class CSC320_Portfolio_Project_Option1 {
         inventory.remove(key);            
     }
 
+    public static String selectAuto(HashMap<String, Automobile> inventory){
+        return "";
+    }
+
     public static void showInventory(HashMap<String, Automobile> inventory){
         
         if(inventory.size()>0){
             System.out.println("\nCurrent Vehicle Inventory is: ");
-            inventory.forEach((key, value) ->{
-                System.out.println(value);
-            });
+            
+            for(int i = 0; i < inventory.size(); i++){
+            
+                System.out.println("("+ (i+1) +") " + inventory.values().toArray()[i]);
+            }   
+            
         }else{
             System.out.println("\nNo Inventory! You need to add a vehicle.");
         }
