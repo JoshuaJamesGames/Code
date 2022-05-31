@@ -65,7 +65,7 @@ public class CSC320_Portfolio_Project_Option1 {
             System.out.println("(3) Update a vehicle.");
             System.out.println("(4) View inventory.");
             System.out.println("(q) Quit the program.");
-
+            System.out.print("What would you like to do?: ");
             selectedOption = scnr.next();
         
 
@@ -80,7 +80,7 @@ public class CSC320_Portfolio_Project_Option1 {
             }else if (selectedOption.equals("q")){
                 System.out.println("\nGoodbye!");
             }else{
-                System.out.println("That option isn\'t on the list.");
+                System.out.println("\nThat option isn\'t on the list.");
             }
         }
         scnr.close();
@@ -115,6 +115,10 @@ public class CSC320_Portfolio_Project_Option1 {
         return new Automobile(make, model, color, year, mileage);
     }
 
+    public static String autoHash(Automobile auto){
+
+    }
+
     public static class Automobile{
 
         private String make;
@@ -136,6 +140,18 @@ public class CSC320_Portfolio_Project_Option1 {
             this.year = year;
             this.mileage = mileage;          
 
+        }
+
+        public HashMap<String, Object> getInfo(){
+            
+            HashMap<String, Object> autoInfo = new HashMap<String, Object>();
+            autoInfo.put("make", this.make);
+            autoInfo.put("model", this.model);
+            autoInfo.put("color", this.color);
+            autoInfo.put("year", this.year);
+            autoInfo.put("mileage", this.mileage);
+
+            return autoInfo;
         }
 
     }
