@@ -48,10 +48,39 @@ print the information in the main class.
 If "N", indicate that a file will not be printed.
 
 */
+import java.util.Scanner;
 
 public class CSC320_Portfolio_Project_Option1 {
     public static void main(String[] args) {
         
+    }
+
+    public static Automobile makeAuto(){
+        Scanner scnr = new Scanner(System.in);
+        String make;
+        String model;
+        String color;
+        int year;
+        int mileage;
+
+        System.out.println("\nLet\'s make an automobile!");
+        System.out.println("I\'ll walk you through the details.\n");
+        System.out.print("Who made the car? (It\'s make): ");
+        make = scnr.next();
+        System.out.printf("What type of %s is it? (The model): ", make);
+        model = scnr.next();
+        System.out.printf("What color is the %s %s?: ", make, model);
+        color = scnr.next();
+        System.out.printf(
+            "So far, you have entered a %s %s %s.\nWhat year was it made?: ", 
+                            make, model, color);
+        year = scnr.nextInt();
+        System.out.print("Finally, how many miles does it have?: ");
+        mileage = scnr.nextInt();
+        System.out.printf("\nAdding a %s %s %s made in %d with %d miles.", 
+                            color, make, model, year, mileage);
+        scnr.close();
+        return new Automobile(make, model, color, year, mileage);
     }
 
     public static class Automobile{
