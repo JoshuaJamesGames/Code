@@ -113,7 +113,7 @@ public class CSC320_Portfolio_Project_Option1 {
         year = scnr.nextInt();
         System.out.print("Finally, how many miles does it have?: ");
         mileage = scnr.nextInt();
-        System.out.printf("\nAdding a %s %s %s made in %d with %d miles.", 
+        System.out.printf("\nAdding a %s %s %s made in %d with %d miles.\n", 
                             color, make, model, year, mileage);
         
         return new Automobile(make, model, color, year, mileage);
@@ -145,7 +145,7 @@ public class CSC320_Portfolio_Project_Option1 {
                 System.out.println(value);
             });
         }else{
-            System.out.println("\nNo Inventory! You need to add a vehicle.")
+            System.out.println("\nNo Inventory! You need to add a vehicle.");
         }
 
     }
