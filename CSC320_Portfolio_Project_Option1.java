@@ -50,5 +50,28 @@ If "N", indicate that a file will not be printed.
 */
 
 public class CSC320_Portfolio_Project_Option1 {
-    
+    public static void main(String[] args) {
+        
+    }
+
+    public static class Automobile{
+
+        private String make;
+        private String model;
+        private String color;
+        private int year;
+        private int mileage;
+
+        public Automobile(
+            String make,
+            String model,
+            String color,
+            int year,
+            int mileage){
+
+            
+
+        }
+
+    }
 }
