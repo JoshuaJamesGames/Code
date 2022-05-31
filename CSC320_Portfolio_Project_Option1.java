@@ -49,10 +49,42 @@ If "N", indicate that a file will not be printed.
 
 */
 import java.util.Scanner;
+import java.util.HashMap;
 
 public class CSC320_Portfolio_Project_Option1 {
     public static void main(String[] args) {
+        String selectedOption = "";
+        HashMap<String, Automobile> inventory = new HashMap<String, Automobile>();
+        Scanner scnr = new Scanner(System.in);
+
+        System.out.println("Welcome to the Vehicle Inventory Program!");
+        System.out.println("Select an option for the list.");
+        while(!selectedOption.equals("q")){
+            System.out.println("\n(1) Add new vehicle.");
+            System.out.println("(2) Remove a vehicle.");
+            System.out.println("(3) Update a vehicle.");
+            System.out.println("(4) View inventory.");
+            System.out.println("(q) Quit the program.");
+
+            selectedOption = scnr.next();
         
+
+            if (selectedOption.equals("1")){
+
+            }else if (selectedOption.equals("2")){
+
+            }else if (selectedOption.equals("3")){
+
+            }else if (selectedOption.equals("4")){
+
+            }else if (selectedOption.equals("q")){
+                System.out.println("\nGoodbye!");
+            }else{
+                System.out.println("That option isn\'t on the list.");
+            }
+        }
+        scnr.close();
+    
     }
 
     public static Automobile makeAuto(){
@@ -98,7 +130,11 @@ public class CSC320_Portfolio_Project_Option1 {
             int year,
             int mileage){
 
-            
+            this.make = make;
+            this.model = model;
+            this.color = color;
+            this.year = year;
+            this.mileage = mileage;          
 
         }
 
