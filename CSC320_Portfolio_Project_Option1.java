@@ -118,14 +118,21 @@ public class CSC320_Portfolio_Project_Option1 {
     }
 
     public static String autoHash(Automobile auto){
-        String hash = "test";
-
+        
+        String hash = Integer.toString(auto.hashCode());
         return hash;
     }
 
     public static void addAuto(
         HashMap<String, Automobile> inventory, Automobile auto){
-            inventory.put(autoHash(auto), auto);
+            
+        inventory.put(autoHash(auto), auto);
+    }
+
+    public static void remAuto(
+        HashMap<String, Automobile> inventory, String key){
+            
+        inventory.remove(key);            
     }
 
     public static class Automobile{
