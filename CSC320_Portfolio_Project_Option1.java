@@ -65,7 +65,7 @@ public class CSC320_Portfolio_Project_Option1 {
             System.out.println("(3) Update a vehicle.");
             System.out.println("(4) View inventory.");
             System.out.println("(q) Quit the program.");
-            System.out.print("What would you like to do?: ");
+            System.out.print("\nWhat would you like to do?: ");
             selectedOption = scnr.next();
         
 
@@ -78,6 +78,8 @@ public class CSC320_Portfolio_Project_Option1 {
             }else if (selectedOption.equals("3")){
 
             }else if (selectedOption.equals("4")){
+
+                showInventory(inventory);
 
             }else if (selectedOption.equals("q")){
                 System.out.println("\nGoodbye!");
@@ -136,10 +138,15 @@ public class CSC320_Portfolio_Project_Option1 {
     }
 
     public static void showInventory(HashMap<String, Automobile> inventory){
-
-        inventory.forEach((key, value) ->{
-
-        });
+        
+        if(inventory.size()>0){
+            System.out.println("\nCurrent Vehicle Inventory is: ");
+            inventory.forEach((key, value) ->{
+                System.out.println(value);
+            });
+        }else{
+            System.out.println("\nNo Inventory! You need to add a vehicle.")
+        }
 
     }
 
