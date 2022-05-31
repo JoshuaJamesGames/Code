@@ -53,15 +53,18 @@ import java.math.RoundingMode;
 public class Solution {
 
     public static BigInteger BeattySeries(BigDecimal SqrtOfTwo, BigInteger N){
+        //Walking through the creation of C - Compliment of N = floor((SqrtOfTwo-1)*N)
         BigDecimal CminusOne = SqrtOfTwo.subtract(new BigDecimal("1"));
         BigDecimal CminusOneMultiplied = CminusOne.multiply(new BigDecimal(N));
         BigDecimal BigC = CminusOneMultiplied.setScale(0,RoundingMode.FLOOR);
         BigInteger C = BigC.toBigInteger();
 
+        //Base case
         if(N.equals(BigInteger.ZERO)){
             return N;
         }
-
+        //Hang on to your hats - Can't overload standard operators so chaining function calls here
+        //Implementing N*C + N(N+1)/2 - C(C+1)/2 - Series(C)
         return (N.multiply(C)).add((N.multiply((N.add(BigInteger.ONE))).divide(BigInteger.TWO))).subtract((C.multiply((C.add(BigInteger.ONE))).divide(BigInteger.TWO))).subtract(BeattySeries(SqrtOfTwo, C));
     }
 
