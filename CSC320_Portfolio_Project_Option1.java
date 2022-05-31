@@ -71,6 +71,7 @@ public class CSC320_Portfolio_Project_Option1 {
 
             if (selectedOption.equals("1")){
 
+                inventory.put(autoHash())
             }else if (selectedOption.equals("2")){
 
             }else if (selectedOption.equals("3")){
@@ -116,7 +117,14 @@ public class CSC320_Portfolio_Project_Option1 {
     }
 
     public static String autoHash(Automobile auto){
+        String hash = "";
 
+        return hash;
+    }
+
+    public static void addAuto(
+        HashMap<String, Automobile> inventory, Automobile auto){
+            inventory.put(autoHash(auto), auto);
     }
 
     public static class Automobile{
