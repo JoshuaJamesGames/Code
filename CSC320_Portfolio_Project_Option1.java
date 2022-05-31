@@ -135,6 +135,14 @@ public class CSC320_Portfolio_Project_Option1 {
         inventory.remove(key);            
     }
 
+    public static void showInventory(HashMap<String, Automobile> inventory){
+
+        inventory.forEach((key, value) ->{
+
+        });
+
+    }
+
     public static class Automobile{
 
         private String make;
@@ -168,6 +176,12 @@ public class CSC320_Portfolio_Project_Option1 {
             autoInfo.put("mileage", this.mileage);
 
             return autoInfo;
+        }
+
+        public String toString(){
+            return (String.format("%d %s %s %s with %d miles.", 
+                this.year, this.color, this.make, this.model, this.mileage));
+            
         }
 
     }
