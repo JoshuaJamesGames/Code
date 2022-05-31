@@ -71,7 +71,8 @@ public class CSC320_Portfolio_Project_Option1 {
 
             if (selectedOption.equals("1")){
 
-                inventory.put(autoHash())
+                addAuto(inventory, makeAuto());
+
             }else if (selectedOption.equals("2")){
 
             }else if (selectedOption.equals("3")){
@@ -112,12 +113,12 @@ public class CSC320_Portfolio_Project_Option1 {
         mileage = scnr.nextInt();
         System.out.printf("\nAdding a %s %s %s made in %d with %d miles.", 
                             color, make, model, year, mileage);
-        scnr.close();
+        
         return new Automobile(make, model, color, year, mileage);
     }
 
     public static String autoHash(Automobile auto){
-        String hash = "";
+        String hash = "test";
 
         return hash;
     }
