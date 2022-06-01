@@ -80,7 +80,7 @@ public class CSC320_Portfolio_Project_Option1 {
                 remAuto(inventory, selectAuto(inventory));
                 
             }else if (selectedOption.equals("3")){
-                
+
                 String selectedAuto = selectAuto(inventory);
                 if(!selectedAuto.equals(null)){
                     updateAuto(inventory, selectedAuto, selectAttribute(inventory, selectedAuto));
@@ -183,7 +183,7 @@ public class CSC320_Portfolio_Project_Option1 {
             System.out.println("("+ (i+1) +") " + selectedAutoDetails.keySet().toArray()[i] +" : "+ selectedAutoDetails.values().toArray()[i]);
         }
         
-        System.out.println("What attribute would you like to update?: ");
+        System.out.print("What attribute would you like to update?: ");
         attributeSelected = scnr.nextInt();
 
         return attributeSelected;
@@ -191,6 +191,11 @@ public class CSC320_Portfolio_Project_Option1 {
 
     public static void updateAuto(
         HashMap<String, Automobile> inventory, String key, int attribute){
+
+        Automobile selectedAuto = inventory.get(key);
+        HashMap<String, Object> selectedAutoDetails = inventory.get(key).getInfo();
+
+        String 
         
     }
 
@@ -222,14 +227,14 @@ public class CSC320_Portfolio_Project_Option1 {
             String make,
             String model,
             String color,
-            int year,
-            int mileage){
+            String year,
+            String mileage){
 
             this.make = make;
             this.model = model;
             this.color = color;
-            this.year = year;
-            this.mileage = mileage;          
+            this.year = Integer.valueOf(year);
+            this.mileage = Integer.valueOf(mileage);          
 
         }
 
