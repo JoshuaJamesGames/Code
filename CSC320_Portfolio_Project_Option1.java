@@ -50,6 +50,7 @@ If "N", indicate that a file will not be printed.
 */
 import java.util.Scanner;
 import java.util.HashMap;
+import java.util.ArrayList;
 
 public class CSC320_Portfolio_Project_Option1 {
     public static void main(String[] args) {
@@ -75,6 +76,9 @@ public class CSC320_Portfolio_Project_Option1 {
 
             }else if (selectedOption.equals("2")){
 
+                System.out.println("\nWhat vehicle would you like to remove?: ");
+                remAuto(inventory, selectAuto(inventory));
+                
             }else if (selectedOption.equals("3")){
 
             }else if (selectedOption.equals("4")){
@@ -133,12 +137,31 @@ public class CSC320_Portfolio_Project_Option1 {
 
     public static void remAuto(
         HashMap<String, Automobile> inventory, String key){
-            
+        System.out.printf("Removing %s\n",inventory.get(key));  
         inventory.remove(key);            
     }
 
     public static String selectAuto(HashMap<String, Automobile> inventory){
-        return "";
+        ArrayList<String> keyList = new ArrayList<String>();
+        int selectedKey = -1;
+        Scanner scnr = new Scanner(System.in);
+
+        if(inventory.size()>0){        
+            
+            
+            for(int i = 0; i < inventory.size(); i++){
+                keyList.add(inventory.keySet().toArray()[i].toString());
+                System.out.println("("+ (i+1) +") " + inventory.values().toArray()[i]);
+            }   
+            
+            System.out.print("\nSelect a vehicle Number 1-" + keyList.size() + ": ");
+            selectedKey = scnr.nextInt();
+            return keyList.get(selectedKey - 1);
+        }else{
+            System.out.println("\nNo Inventory! You need to add a vehicle.");
+            return null;
+        }
+        
     }
 
     public static void showInventory(HashMap<String, Automobile> inventory){
