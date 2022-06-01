@@ -164,6 +164,16 @@ public class CSC320_Portfolio_Project_Option1 {
         
     }
 
+    public static int selectAttribute(HashMap<String, Automobile> inventory, String key){
+        int attributeSelected = -1;
+
+        return attributeSelected;
+    }
+
+    public static void updateAuto(HashMap<String, Automobile> inventory, String key, int attribute){
+
+    }
+
     public static void showInventory(HashMap<String, Automobile> inventory){
         
         if(inventory.size()>0){
@@ -213,6 +223,20 @@ public class CSC320_Portfolio_Project_Option1 {
             autoInfo.put("mileage", this.mileage);
 
             return autoInfo;
+        }
+
+        public void updateInfo(
+            String make,
+            String model,
+            String color,
+            int year,
+            int mileage){
+            
+            this.make = make;
+            this.model = model;
+            this.color = color;
+            this.year = year;
+            this.mileage = mileage; 
         }
 
         public String toString(){
