@@ -80,7 +80,12 @@ public class CSC320_Portfolio_Project_Option1 {
                 remAuto(inventory, selectAuto(inventory));
                 
             }else if (selectedOption.equals("3")){
-
+                
+                String selectedAuto = selectAuto(inventory);
+                if(!selectedAuto.equals(null)){
+                    updateAuto(inventory, selectedAuto, selectAttribute(inventory, selectedAuto));
+                }
+                
             }else if (selectedOption.equals("4")){
 
                 showInventory(inventory);
@@ -164,14 +169,29 @@ public class CSC320_Portfolio_Project_Option1 {
         
     }
 
-    public static int selectAttribute(HashMap<String, Automobile> inventory, String key){
+    public static int selectAttribute(
+        HashMap<String, Automobile> inventory, String key){
+        Scanner scnr = new Scanner(System.in);
         int attributeSelected = -1;
+
+        HashMap<String, Object> selectedAutoDetails = inventory.get(key).getInfo();
+
+        System.out.println("\nVehicle attributes: ");
+            
+        for(int i = 0; i < selectedAutoDetails.size(); i++){
+        
+            System.out.println("("+ (i+1) +") " + selectedAutoDetails.keySet().toArray()[i] +" : "+ selectedAutoDetails.values().toArray()[i]);
+        }
+        
+        System.out.println("What attribute would you like to update?: ");
+        attributeSelected = scnr.nextInt();
 
         return attributeSelected;
     }
 
-    public static void updateAuto(HashMap<String, Automobile> inventory, String key, int attribute){
-
+    public static void updateAuto(
+        HashMap<String, Automobile> inventory, String key, int attribute){
+        
     }
 
     public static void showInventory(HashMap<String, Automobile> inventory){
