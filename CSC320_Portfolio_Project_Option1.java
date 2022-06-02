@@ -142,8 +142,11 @@ public class CSC320_Portfolio_Project_Option1 {
 
     public static void remAuto(
         HashMap<String, Automobile> inventory, String key){
-        System.out.printf("Removing %s\n",inventory.get(key));  
-        inventory.remove(key);            
+        if(!key.equals(null)){
+            System.out.printf("Removing %s\n",inventory.get(key));  
+            inventory.remove(key);     
+        }    
+                   
     }
 
     public static String selectAuto(HashMap<String, Automobile> inventory){
@@ -169,43 +172,43 @@ public class CSC320_Portfolio_Project_Option1 {
         
     }
 
-    public static int selectAttribute(
+    public static String selectAttribute(
         HashMap<String, Automobile> inventory, String key){
         Scanner scnr = new Scanner(System.in);
         int attributeSelected = -1;
 
         HashMap<String, Object> selectedAutoDetails = inventory.get(key).getInfo();
-
+        String keyList[] = new String[selectedAutoDetails.size()];
         System.out.println("\nVehicle attributes: ");
             
         for(int i = 0; i < selectedAutoDetails.size(); i++){
-        
-            System.out.println("("+ (i+1) +") " + selectedAutoDetails.keySet().toArray()[i] +" : "+ selectedAutoDetails.values().toArray()[i]);
+            keyList[i] = selectedAutoDetails.keySet().toArray()[i].toString();
+            System.out.println("("+ (i+1) +") " + keyList[i] +" : "+ selectedAutoDetails.values().toArray()[i]);
         }
         
         System.out.print("What attribute would you like to update?: ");
         attributeSelected = scnr.nextInt();
 
-        return attributeSelected;
+        return keyList[attributeSelected-1];
     }
 
     public static void updateAuto(
-        HashMap<String, Automobile> inventory, String key, int attribute){
+        HashMap<String, Automobile> inventory, String key, String attribute){
 
         Scanner scnr = new Scanner(System.in);
         HashMap<String, Object> selectedAutoDetails = inventory.get(key).getInfo();
 
-        String oldValue =selectedAutoDetails.values().toArray()[attribute].toString();
-        String valueKey = selectedAutoDetails.keySet().toArray()[attribute].toString();
+        String oldValue = selectedAutoDetails.get(attribute).toString();
+        //String valueKey = selectedAutoDetails.keySet().toArray()[attribute].toString();
         
-        System.out.printf("You have selected %s with a value of %s.\n", valueKey, oldValue);
+        System.out.printf("You have selected %s with a value of %s.\n", attribute, oldValue);
         System.out.print("What is the new value?: ");
         
         String newValue = scnr.next();
 
-        System.out.printf("Updating %s to %s.\n", valueKey, newValue);
+        System.out.printf("Updating %s to %s.\n", attribute, newValue);
 
-        inventory.get(key).updateInfo(valueKey, newValue);      
+        inventory.get(key).updateInfo(attribute, newValue);      
         
     }
 
