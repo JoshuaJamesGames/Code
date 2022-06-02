@@ -192,10 +192,20 @@ public class CSC320_Portfolio_Project_Option1 {
     public static void updateAuto(
         HashMap<String, Automobile> inventory, String key, int attribute){
 
-        Automobile selectedAuto = inventory.get(key);
+        Scanner scnr = new Scanner(System.in);
         HashMap<String, Object> selectedAutoDetails = inventory.get(key).getInfo();
 
-        String 
+        String oldValue =selectedAutoDetails.values().toArray()[attribute].toString();
+        String valueKey = selectedAutoDetails.keySet().toArray()[attribute].toString();
+        
+        System.out.printf("You have selected %s with a value of %s.\n", valueKey, oldValue);
+        System.out.print("What is the new value?: ");
+        
+        String newValue = scnr.next();
+
+        System.out.printf("Updating %s to %s.\n", valueKey, newValue);
+
+        inventory.get(key).updateInfo(valueKey, newValue);      
         
     }
 
@@ -250,18 +260,25 @@ public class CSC320_Portfolio_Project_Option1 {
             return autoInfo;
         }
 
-        public void updateInfo(
-            String make,
-            String model,
-            String color,
-            int year,
-            int mileage){
+        public void updateInfo(String key, String value){
             
-            this.make = make;
-            this.model = model;
-            this.color = color;
-            this.year = year;
-            this.mileage = mileage; 
+                switch(key){
+                    case "make":
+                        this.make = value;
+                    break;
+                    case "model":
+                        this.model = value;
+                    break;
+                    case "color":
+                        this.color = value;
+                    break;
+                    case "year":
+                        this.year = Integer.valueOf(value);
+                    break;
+                    case "mileage":
+                        this.mileage = Integer.valueOf(value);
+                    break;
+                }
         }
 
         public String toString(){
