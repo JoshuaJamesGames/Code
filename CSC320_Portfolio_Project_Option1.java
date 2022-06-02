@@ -82,7 +82,7 @@ public class CSC320_Portfolio_Project_Option1 {
             }else if (selectedOption.equals("3")){
 
                 String selectedAuto = selectAuto(inventory);
-                if(!selectedAuto.equals(null)){
+                if(!selectedAuto.equals("null")){
                     updateAuto(inventory, selectedAuto, selectAttribute(inventory, selectedAuto));
                 }
                 
@@ -142,7 +142,7 @@ public class CSC320_Portfolio_Project_Option1 {
 
     public static void remAuto(
         HashMap<String, Automobile> inventory, String key){
-        if(!key.equals(null)){
+        if(!key.equals("null")){
             System.out.printf("Removing %s\n",inventory.get(key));  
             inventory.remove(key);     
         }    
@@ -167,7 +167,7 @@ public class CSC320_Portfolio_Project_Option1 {
             return keyList.get(selectedKey - 1);
         }else{
             System.out.println("\nNo Inventory! You need to add a vehicle.");
-            return null;
+            return "null";
         }
         
     }
