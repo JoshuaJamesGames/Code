@@ -105,8 +105,8 @@ public class CSC320_Portfolio_Project_Option1 {
         String make;
         String model;
         String color;
-        int year;
-        int mileage;
+        String year;
+        String mileage;
 
         System.out.println("\nLet\'s make an automobile!");
         System.out.println("I\'ll walk you through the details.\n");
@@ -119,10 +119,10 @@ public class CSC320_Portfolio_Project_Option1 {
         System.out.printf(
             "So far, you have entered a %s %s %s.\nWhat year was it made?: ", 
                             make, model, color);
-        year = scnr.nextInt();
+        year = scnr.next();
         System.out.print("Finally, how many miles does it have?: ");
-        mileage = scnr.nextInt();
-        System.out.printf("\nAdding a %s %s %s made in %d with %d miles.\n", 
+        mileage = scnr.next();
+        System.out.printf("\nAdding a %s %s %s made in %s with %s miles.\n", 
                             color, make, model, year, mileage);
         
         return new Automobile(make, model, color, year, mileage);
