@@ -50,16 +50,24 @@ If "N", indicate that a file will not be printed.
 */
 import java.util.Scanner;
 import java.util.HashMap;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class CSC320_Portfolio_Project_Option1 {
     public static void main(String[] args) {
+        //Initialize selectedOption to an empty String
+        //Create a HashMap to hold the Inventory
+        //We need input so initialize a Scanner
         String selectedOption = "";
         HashMap<String, Automobile> inventory = new HashMap<String, Automobile>();
         Scanner scnr = new Scanner(System.in);
 
+        //Intro to user
         System.out.println("Welcome to the Vehicle Inventory Program!");
         System.out.println("Select an option for the list.");
+        //Program will prompt user until "q" is entered to quit
         while(!selectedOption.equals("q")){
             System.out.println("\n(1) Add new vehicle.");
             System.out.println("(2) Remove a vehicle.");
@@ -69,29 +77,63 @@ public class CSC320_Portfolio_Project_Option1 {
             System.out.print("\nWhat would you like to do?: ");
             selectedOption = scnr.next();
         
-
+            //Option 1 -Add a Vehicle
             if (selectedOption.equals("1")){
+                try{
+                    addAuto(inventory, makeAuto());
+                }catch(Exception e){
+                    System.out.println("There was an Error creating that Vehicle");
+                    System.out.println(e);
+                }
 
-                addAuto(inventory, makeAuto());
-
+            //Option 2 - Remove a Vehicle
             }else if (selectedOption.equals("2")){
 
                 System.out.println("\nWhat vehicle would you like to remove?: ");
-                remAuto(inventory, selectAuto(inventory));
-                
-            }else if (selectedOption.equals("3")){
-
-                String selectedAuto = selectAuto(inventory);
-                if(!selectedAuto.equals("null")){
-                    updateAuto(inventory, selectedAuto, selectAttribute(inventory, selectedAuto));
+                try{
+                    remAuto(inventory, selectAuto(inventory));
+                }catch(Exception e){
+                    System.out.println("There was an Error removing that Vehicle");
+                    System.out.println(e);
                 }
+            
+            //Option 3 - Update a vehicle
+            }else if (selectedOption.equals("3")){
                 
+                try{
+                    String selectedAuto = selectAuto(inventory);
+                    if(!selectedAuto.equals("null")){
+                        updateAuto(inventory, selectedAuto, selectAttribute(inventory, selectedAuto));
+                    }
+                }catch(Exception e){
+                    System.out.println("There was an Error Updating that Vehicle");
+                    System.out.println(e);
+                }                
+            
+            //Option 4 - Show Inventory
             }else if (selectedOption.equals("4")){
 
                 showInventory(inventory);
-
+            
+            //Enter "q" to quit - Prompt to save Inventory
             }else if (selectedOption.equals("q")){
-                System.out.println("\nGoodbye!");
+                System.out.print("Would you like to Save? (Y/N): ");
+                selectedOption = scnr.next();
+                if(selectedOption.toUpperCase().equals("Y")){
+                    try{
+                        saveToFile(inventory);
+                    }catch(Exception e){
+                        System.out.println(e);
+                    }                   
+                    
+                    System.out.println("\nGoodbye!");
+                    break;
+                }else if(selectedOption.toUpperCase().equals("N")){
+                    
+                    System.out.println("\nGoodbye!");
+                    break;
+                }
+            //If not valid option is selected - Prompt and repeat options    
             }else{
                 System.out.println("\nThat option isn\'t on the list.");
             }
@@ -100,6 +142,7 @@ public class CSC320_Portfolio_Project_Option1 {
     
     }
 
+    //Creates an Automobile Object interactively with the user
     public static Automobile makeAuto(){
         Scanner scnr = new Scanner(System.in);
         String make;
@@ -118,7 +161,7 @@ public class CSC320_Portfolio_Project_Option1 {
         color = scnr.next();
         System.out.printf(
             "So far, you have entered a %s %s %s.\nWhat year was it made?: ", 
-                            make, model, color);
+                            color, make, model);
         year = scnr.next();
         System.out.print("Finally, how many miles does it have?: ");
         mileage = scnr.next();
@@ -128,18 +171,21 @@ public class CSC320_Portfolio_Project_Option1 {
         return new Automobile(make, model, color, year, mileage);
     }
 
+    //Uses built-in hashCode() to generate a unique Key in lieu of a VIN
     public static String autoHash(Automobile auto){
         
         String hash = Integer.toString(auto.hashCode());
         return hash;
     }
 
+    //Inserts Generated Hash and Automobile into the inventory
     public static void addAuto(
         HashMap<String, Automobile> inventory, Automobile auto){
             
         inventory.put(autoHash(auto), auto);
     }
 
+    //Removes Selected Automobile - If there are none, displays empty inventory prompt
     public static void remAuto(
         HashMap<String, Automobile> inventory, String key){
         if(!key.equals("null")){
@@ -149,6 +195,7 @@ public class CSC320_Portfolio_Project_Option1 {
                    
     }
 
+    //Generates a list of selectable Automobiles for the user
     public static String selectAuto(HashMap<String, Automobile> inventory){
         ArrayList<String> keyList = new ArrayList<String>();
         int selectedKey = -1;
@@ -172,6 +219,7 @@ public class CSC320_Portfolio_Project_Option1 {
         
     }
 
+    //Generates a list of selectable attributes from an Automobile
     public static String selectAttribute(
         HashMap<String, Automobile> inventory, String key){
         Scanner scnr = new Scanner(System.in);
@@ -192,6 +240,7 @@ public class CSC320_Portfolio_Project_Option1 {
         return keyList[attributeSelected-1];
     }
 
+    //Combines return values from selectAuto and selectAttribute to update an Automobile
     public static void updateAuto(
         HashMap<String, Automobile> inventory, String key, String attribute){
 
@@ -199,8 +248,7 @@ public class CSC320_Portfolio_Project_Option1 {
         HashMap<String, Object> selectedAutoDetails = inventory.get(key).getInfo();
 
         String oldValue = selectedAutoDetails.get(attribute).toString();
-        //String valueKey = selectedAutoDetails.keySet().toArray()[attribute].toString();
-        
+                
         System.out.printf("You have selected %s with a value of %s.\n", attribute, oldValue);
         System.out.print("What is the new value?: ");
         
@@ -212,6 +260,7 @@ public class CSC320_Portfolio_Project_Option1 {
         
     }
 
+    //Prints all Automobiles to the screen using overloaded toString() method
     public static void showInventory(HashMap<String, Automobile> inventory){
         
         if(inventory.size()>0){
@@ -228,6 +277,20 @@ public class CSC320_Portfolio_Project_Option1 {
 
     }
 
+    //Opens or Creates "CSC320_Automobile_Inventory.txt" and writes Inventory to it
+    public static void saveToFile(HashMap<String, Automobile> inventory) throws FileNotFoundException{
+        FileOutputStream fileStream = new FileOutputStream("CSC320_Automobile_Inventory.txt");
+        PrintWriter outFS = new PrintWriter(fileStream);
+
+        inventory.forEach((key,value) ->{
+            outFS.println(value);
+        });
+
+        outFS.close();
+
+    }
+
+    //Automobile class with required private attributes
     public static class Automobile{
 
         private String make;
@@ -242,15 +305,15 @@ public class CSC320_Portfolio_Project_Option1 {
             String color,
             String year,
             String mileage){
-
+            
             this.make = make;
             this.model = model;
             this.color = color;
             this.year = Integer.valueOf(year);
-            this.mileage = Integer.valueOf(mileage);          
+            this.mileage = Integer.valueOf(mileage);             
 
         }
-
+        //Returns a HashMap of Key-Value pairs
         public HashMap<String, Object> getInfo(){
             
             HashMap<String, Object> autoInfo = new HashMap<String, Object>();
@@ -263,6 +326,7 @@ public class CSC320_Portfolio_Project_Option1 {
             return autoInfo;
         }
 
+        //Updates specific Key with a new Value
         public void updateInfo(String key, String value){
             
                 switch(key){
@@ -284,6 +348,7 @@ public class CSC320_Portfolio_Project_Option1 {
                 }
         }
 
+        //Overloaded toString() to make printing easy
         public String toString(){
             return (String.format("%d %s %s %s with %d miles.", 
                 this.year, this.color, this.make, this.model, this.mileage));
