@@ -151,7 +151,7 @@ public class CSC320_Portfolio_Project_Option1 {
         String year;
         String mileage;
 
-        System.out.println("\nLet\'s make an automobile!");
+        System.out.println("\nLet\'s make an Automobile!");
         System.out.println("I\'ll walk you through the details.\n");
         System.out.print("Who made the car? (It\'s make): ");
         make = scnr.next();
