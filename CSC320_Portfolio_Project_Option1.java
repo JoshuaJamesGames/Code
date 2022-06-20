@@ -313,6 +313,13 @@ public class CSC320_Portfolio_Project_Option1 {
             this.mileage = Integer.valueOf(mileage);             
 
         }
+        public Automobile(){
+            make = "None";
+            model = "None";
+            color = "Uncolored";
+            year = 0;
+            mileage = 0;
+        }
         //Returns a HashMap of Key-Value pairs
         public HashMap<String, Object> getInfo(){
             
